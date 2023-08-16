@@ -11,12 +11,12 @@ Cypress.Commands.add('createUser', ({ userName, password }) => {
     })
 })
 
-Cypress.Commands.add('getProfile', (userId, accessToken) => {
+Cypress.Commands.add('getProfile', (userId, token) => {
     cy.api({
         method: 'GET',
         url:`/Account/v1/User/${userId}`,
         failOnStatusCode: false,
-        headers: { Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `Bearer ${token}` }
     })
 })
 
@@ -49,7 +49,7 @@ Cypress.Commands.add('getListBooks', () => {
     })
 })
 
-Cypress.Commands.add('addBooksFavorites', ( userId, accessToken, firstIsbn ) => {
+Cypress.Commands.add('addBooksFavorites', ( userId, token, firstIsbn ) => {
     cy.api({
         method: 'POST',
         url: '/BookStore/v1/Books',
@@ -58,23 +58,23 @@ Cypress.Commands.add('addBooksFavorites', ( userId, accessToken, firstIsbn ) => 
             userId: userId,
             collectionOfIsbns: [{ isbn: firstIsbn }]
         },
-        headers: { Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `Bearer ${token}` }
     });
 });
 
-Cypress.Commands.add('removeBooks', (userId, accessToken) => {
+Cypress.Commands.add('removeBooks', (userId, token) => {
     cy.api({
         method: 'DELETE',
         url: `/BookStore/v1/Books?UserId=${userId}`,
         failOnStatusCode: false,
-        headers: { Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `Bearer ${token}` }
     });
 });
 
-Cypress.Commands.add('deleteAccount', (userId, accessToken) => {
+Cypress.Commands.add('deleteAccount', (userId, token) => {
     cy.api({
         method: 'DELETE',
         url: `https://bookstore.toolsqa.com/Account/v1/User/${userId}`,
-        headers: { Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `Bearer ${token}` }
     });
 });

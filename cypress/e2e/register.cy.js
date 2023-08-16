@@ -1,23 +1,23 @@
 /// <reference types='cypress' />
 
-import { dynamicDate } from '../support/fakerUser'
+import { dynamicData } from '../support/fakerUser'
 
 describe('Create new account', () => {
 
   it('New registration successfully', () => {
-    cy.createUser(dynamicDate)
+    cy.createUser(dynamicData)
       .then((resp) => {
         expect(resp.status).to.equal(201)
         expect(resp.body).to.have.property('userID')
         expect(resp.body).to.have.property('books')
-        expect(resp.body.username).to.equal(dynamicDate.userName)
+        expect(resp.body.username).to.equal(dynamicData.userName)
       })
   })
 
   it('Registration with blank username', () => {
     cy.createUser({
       userName: '',
-      password: dynamicDate.password
+      password: dynamicData.password
     })
       .then((resp) => {
         expect(resp.status).to.equal(400)
@@ -29,7 +29,7 @@ describe('Create new account', () => {
   it('Registration with blank username and password', () => {
     cy.createUser({
       userName: '',
-      password: dynamicDate.password
+      password: dynamicData.password
     })
       .then((resp) => {
         expect(resp.status).to.equal(400)
@@ -40,7 +40,7 @@ describe('Create new account', () => {
 
   it('Registration with a password that does not contain special characters', () => {
     cy.createUser({
-      userName: dynamicDate.userName,
+      userName: dynamicData.userName,
       password: 'test123'
     })
       .then((resp) => {
@@ -55,7 +55,7 @@ describe('Create new account', () => {
   })
 
   it('Registration an account with the same data as an existing account', () => {
-    cy.createUser(dynamicDate)
+    cy.createUser(dynamicData)
       .then((resp) => {
         expect(resp.status).to.equal(406)
         expect(resp.body.code).to.equal('1204')

@@ -3,12 +3,12 @@
 import { radomNumber } from '../support/radomValue'
 
 describe('Books', () => {
-    let accessToken, numberIsbn
-    const numbers = radomNumber()
-    const user = Cypress.env('name')
+    let token, numberIsbn
+    const radom = radomNumber()
+    const usrName = Cypress.env('name')
     const passwd = Cypress.env('password')
-    const userId = Cypress.env('userId')
-    
+    const usrId = Cypress.env('userId')
+
     it('Access a list of available books', () => {
         cy.getBooks()
             .then((resp) => {
@@ -23,18 +23,18 @@ describe('Books', () => {
 
     it('Add and Remove a book from the favorites list', () => {
         cy.login({
-            userName: user,
+            userName: usrName,
             password: passwd
         })
-            .then((resp) => {
-                accessToken = resp.body.token
+            .then((r) => {
+                token = r.body.token
                 cy.getBooks()
             })
-            .then((resp) => {
-                numberIsbn = resp.body.books[numbers].isbn
+            .then((r) => {
+                numberIsbn = r.body.books[radom].isbn
                 cy.addBooksFavorites(
-                    userId,
-                    accessToken,
+                    usrId,
+                    token,
                     numberIsbn
                 )
             })
@@ -43,8 +43,8 @@ describe('Books', () => {
                 expect(resp.body).to.have.property('books')
                 expect(resp.body.books[0].isbn).to.equal(numberIsbn)
 
-                cy.removeBooks(userId, accessToken).then(() => {
-                    cy.getProfile(userId, accessToken).then((resp) => {
+                cy.removeBooks(usrId, token).then(() => {
+                    cy.getProfile(usrId, token).then((resp) => {
                         expect(resp.status).to.equal(200)
                         expect(resp.body.books).to.be.an('array')
                         expect(resp.body.books).to.have.length(0)
@@ -54,21 +54,20 @@ describe('Books', () => {
     })
 
     it('add non-existent book', () => {
-        numberIsbn = 'invalid_isbn'
-
         cy.login({
-            userName: user,
+            userName: usrName,
             password: passwd
         })
-            .then((resp) => {
-                accessToken = resp.body.token
-            }).then(() => {
+            .then((r) => {
+                token = r.body.token
+                numberIsbn = 'invalid_isbn'
                 cy.addBooksFavorites(
-                    userId,
-                    accessToken,
+                    usrId,
+                    token,
                     numberIsbn
                 )
-            }).then((resp) => {
+            })
+            .then((resp) => {
                 expect(resp.status).to.equal(400)
                 expect(resp.body.code).to.equal('1205')
                 expect(resp.body.message).to.equal('ISBN supplied is not available in Books Collection!')

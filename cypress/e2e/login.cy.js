@@ -1,13 +1,14 @@
 /// <reference types='cypress' />
 
-import { dynamicDate } from '../support/fakerUser'
-
 describe('Login', () => {
-    
-    beforeEach(() => { cy.createUser(dynamicDate) })
+    const usrName = Cypress.env('name')
+    const passwd = Cypress.env('password')
 
     it('login successfully', () => {
-        cy.login(dynamicDate)
+        cy.login({
+            userName: usrName,
+            password: passwd
+        })
             .then((resp) => {
                 expect(resp.status).to.equal(200)
                 expect(resp.body).to.have.property('token')
@@ -20,7 +21,7 @@ describe('Login', () => {
     it('Login with invalid username', () => {
         cy.login({
             userName: 'invalid_name',
-            password: dynamicDate.password
+            password: passwd
         })
             .then((resp) => {
                 expect(resp.body.status).to.equal('Failed')
@@ -30,7 +31,7 @@ describe('Login', () => {
 
     it('Login with invalid password', () => {
         cy.login({
-            userName: dynamicDate.userName,
+            userName: usrName,
             password: 'invalid_password'
         })
             .then((resp) => {
