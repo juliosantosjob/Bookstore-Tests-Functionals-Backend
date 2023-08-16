@@ -1,0 +1,20 @@
+{
+  "name": "bookstore-tests-functionals-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress run",
+    "open": "npx cypress open"
+  },
+  "keywords": [],
+  "author": "Julio Santos",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "cypress": "^12.17.3"
+  },
+  "dependencies": {
+    "cypress-plugin-api": "^2.11.1"
+  }
+}

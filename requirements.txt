@@ -1,0 +1,30 @@
+Functionals requirements
+
+### New account registration ###
+
+New account registration - 201 - OK
+Create an account with blank userName - 400 - OK
+Create an account with blank username and password - 400
+Create an account with a password that does not contain special characters - 400
+Create an account with the same data as an existing account - 406
+
+### Login ###
+
+login successfully - 200
+Login with invalid username - 400
+Login with invalid password - 400
+Login with invalid username and password - 400
+
+### Add books to favorites list ###
+
+Access a list of available books - 200
+Add and remove a book from the favorites list - 200
+Adicionar livro inexistente - 400
+Deletar um livro inexistente - 400
+
+### Deletar conta ###
+
+Criar uma conta e deletar a mesma - 204
+Deletar uma conta com id invalid - 400
+Deletar uma conta e tentar logar com a msma - 400
+
