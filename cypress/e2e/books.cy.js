@@ -1,6 +1,6 @@
 /// <reference types='cypress' />
 
-import { radomNumber } from '../support/radomValue'
+import { radomNumber } from '../support/randomData'
 
 describe('Books', () => {
     let token, numberIsbn
@@ -8,6 +8,12 @@ describe('Books', () => {
     const usrName = Cypress.env('name')
     const passwd = Cypress.env('password')
     const usrId = Cypress.env('userId')
+
+    beforeEach(() => {
+        cy.loginUser({ userName: usrName, password: passwd }).then((r) => {
+            token = r.body.token
+        })
+    })
 
     it('Access a list of available books', () => {
         cy.getBooks()
@@ -22,14 +28,7 @@ describe('Books', () => {
     })
 
     it('Add and Remove a book from the favorites list', () => {
-        cy.login({
-            userName: usrName,
-            password: passwd
-        })
-            .then((r) => {
-                token = r.body.token
-                cy.getBooks()
-            })
+        cy.getBooks()
             .then((r) => {
                 numberIsbn = r.body.books[radom].isbn
                 cy.addBooksFavorites(
@@ -54,19 +53,13 @@ describe('Books', () => {
     })
 
     it('add non-existent book', () => {
-        cy.login({
-            userName: usrName,
-            password: passwd
-        })
-            .then((r) => {
-                token = r.body.token
-                numberIsbn = 'invalid_isbn'
-                cy.addBooksFavorites(
-                    usrId,
-                    token,
-                    numberIsbn
-                )
-            })
+        numberIsbn = 'invalid_isbn'
+
+        cy.addBooksFavorites(
+            usrId,
+            token,
+            numberIsbn
+        )
             .then((resp) => {
                 expect(resp.status).to.equal(400)
                 expect(resp.body.code).to.equal('1205')

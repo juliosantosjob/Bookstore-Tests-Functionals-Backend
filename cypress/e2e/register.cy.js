@@ -1,6 +1,6 @@
 /// <reference types='cypress' />
 
-import { dynamicData } from '../support/fakerUser'
+import { dynamicData } from '../support/randomData'
 
 describe('Create new account', () => {
 

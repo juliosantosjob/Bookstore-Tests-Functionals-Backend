@@ -5,7 +5,7 @@ describe('Login', () => {
     const passwd = Cypress.env('password')
 
     it('login successfully', () => {
-        cy.login({
+        cy.loginUser({
             userName: usrName,
             password: passwd
         })
@@ -19,7 +19,7 @@ describe('Login', () => {
     })
 
     it('Login with invalid username', () => {
-        cy.login({
+        cy.loginUser({
             userName: 'invalid_name',
             password: passwd
         })
@@ -30,7 +30,7 @@ describe('Login', () => {
     })
 
     it('Login with invalid password', () => {
-        cy.login({
+        cy.loginUser({
             userName: usrName,
             password: 'invalid_password'
         })
@@ -41,7 +41,7 @@ describe('Login', () => {
     })
 
     it('Login with invalid username and password ', () => {
-        cy.login({
+        cy.loginUser({
             userName: 'invalid_name',
             password: 'invalid_password'
         })
