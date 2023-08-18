@@ -1,15 +1,16 @@
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
-  e2e: {
-    setupNodeEvents(on, config) { },
-    baseUrl: 'https://bookstore.toolsqa.com',
-    env: {
-      hideCredentials: true,
-      hideCredentialsOptions: {
-        headers: ['user-key'],
-      }
+    modifyObstructiveCode: true,
+    responseTimeout: 3000,
+    fixturesFolder: false,
+    reporter: 'cypress-mochawesome-reporter',
+    ignoreVideos: true,
+    e2e: {
+        setupNodeEvents(on, config) {
+            
+            require('cypress-mochawesome-reporter/plugin')(on);
+            return config;
+        }
     }
-  },
-  video: false,
-})
+}); 

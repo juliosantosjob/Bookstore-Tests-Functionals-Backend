@@ -8,8 +8,8 @@ Cypress.Commands.add('createUser', ({ userName, password }) => {
             userName: userName,
             password: password,
         }
-    })
-})
+    });
+});
 
 Cypress.Commands.add('getProfile', (userId, token) => {
     cy.api({
@@ -17,8 +17,8 @@ Cypress.Commands.add('getProfile', (userId, token) => {
         url:`/Account/v1/User/${userId}`,
         failOnStatusCode: false,
         headers: { Authorization: `Bearer ${token}` }
-    })
-})
+    });
+});
 
 Cypress.Commands.add('loginUser', ({ userName, password }) => {
     cy.api({
@@ -30,24 +30,24 @@ Cypress.Commands.add('loginUser', ({ userName, password }) => {
             userName: userName,
             password: password,
         }
-    })
-})
+    });
+});
 
-Cypress.Commands.add('getBooks', () => {
+Cypress.Commands.add('getBookList', () => {
     cy.api({
         method: 'GET',
         url: '/BookStore/v1/Books',
         failOnStatusCode: false
-    })
-})
+    });
+});
 
 Cypress.Commands.add('getListBooks', () => {
     cy.api({
         method: 'GET',
         url: '/BookStore/v1/Books',
         failOnStatusCode: false
-    })
-})
+    });
+});
 
 Cypress.Commands.add('addBooksFavorites', ( userId, token, firstIsbn ) => {
     cy.api({
@@ -59,8 +59,8 @@ Cypress.Commands.add('addBooksFavorites', ( userId, token, firstIsbn ) => {
             collectionOfIsbns: [{ isbn: firstIsbn }]
         },
         headers: { Authorization: `Bearer ${token}` }
-    })
-})
+    });
+});
 
 Cypress.Commands.add('removeBooks', (userId, token) => {
     cy.api({
@@ -68,13 +68,13 @@ Cypress.Commands.add('removeBooks', (userId, token) => {
         url: `/BookStore/v1/Books?UserId=${userId}`,
         failOnStatusCode: false,
         headers: { Authorization: `Bearer ${token}` }
-    })
-})
+    });
+});
 
 Cypress.Commands.add('deleteAccount', ({ userId, token }) => {
     cy.api({
         method: 'DELETE',
         url: `https://bookstore.toolsqa.com/Account/v1/User/${userId}`,
         headers: { Authorization: `Bearer ${token}` }
-    })
-})
+    });
+});

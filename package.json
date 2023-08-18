@@ -4,15 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx cypress run",
-    "open": "npx cypress open"
+    "open": "npx cypress open",
+    "test": "npx cypress test",
+    "test:report": "cypress run --config video=false --spec cypress/e2e/** --browser chrome"
   },
   "keywords": [],
   "author": "Julio Santos",
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
-    "cypress": "^12.17.3"
+    "cypress": "^12.17.3",
+    "cypress-mochawesome-reporter": "^3.5.1",
+    "eslint-plugin-cypress": "^2.14.0"
   },
   "dependencies": {
     "cypress-plugin-api": "^2.11.1"

@@ -1,2 +1,6 @@
 cypress.env.json
 node_modules
+allure-report
+cypress/videos
+cypress/reports
+cypress/downloads

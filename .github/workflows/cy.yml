@@ -1,0 +1,33 @@
+name: Pipe Cy
+
+on:
+  push:
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  regression-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Runner Tests
+        uses: cypress-io/github-action@v5
+        env:
+            baseUrl: ${{ secrets.baseUrl }}
+            name: ${{ secrets.name }}
+            password: ${{ secrets.password }}
+            userId: ${{ secrets.userId }}
+            build: npm run build
+            start: npm run test:report
+            
+      - name: Deploy to GitHub Pages
+        if: always()
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: gh-pages
+          build_dir: ./cypress/reports/html
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

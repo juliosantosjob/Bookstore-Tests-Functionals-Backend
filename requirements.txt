@@ -19,12 +19,9 @@ Login with invalid username and password - 400
 
 Access a list of available books - 200
 Add and remove a book from the favorites list - 200
-Adicionar livro inexistente - 400
-Deletar um livro inexistente - 400
+Add non-existent book - 400
 
-### Deletar conta ###
+### Delete account ###
 
-Criar uma conta e deletar a mesma - 204
-Deletar uma conta com id invalid - 400
-Deletar uma conta e tentar logar com a msma - 400
-
+Delete user - 204
+Delet non-existent user - 400
