@@ -18,7 +18,7 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           build: npm run build
-          start: npm start
+          start: npm run test
         env:
           CYPRESS_BASE_URL: ${{secrets.BASE_URL}}
           CYPRESS_NAME: ${{secrets.NAME}}
