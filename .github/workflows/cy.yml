@@ -16,7 +16,6 @@ jobs:
       - name: Runner Tests
         uses: cypress-io/github-action@v5
         env:
-          CYPRESS_BASE_URL: ${{secrets.BASE_URL}}
           CYPRESS_NAME: ${{secrets.NAME}}
           CYPRESS_PASSWORD: ${{secrets.PASSWORD}}
           CYPRESS_USER_ID: ${{secrets.USER_ID}}
