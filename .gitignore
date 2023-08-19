@@ -4,3 +4,4 @@ allure-report
 cypress/videos
 cypress/reports
 cypress/downloads
+screenshots

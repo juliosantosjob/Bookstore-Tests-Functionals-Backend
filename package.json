@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "open": "npx cypress open",
-    "test": "npx cypress test",
-    "test:report": "cypress run --config video=false --spec cypress/e2e/** --browser chrome"
+    "test": "cypress run --config video=false --spec cypress/e2e/** --browser chrome"
   },
   "keywords": [],
   "author": "Julio Santos",

@@ -1,11 +1,11 @@
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
-    modifyObstructiveCode: true,
     responseTimeout: 3000,
     fixturesFolder: false,
     reporter: 'cypress-mochawesome-reporter',
-    ignoreVideos: true,
+    video: false,
+    screenshotOnRunFailure: false,
     e2e: {
         setupNodeEvents(on, config) {
             
