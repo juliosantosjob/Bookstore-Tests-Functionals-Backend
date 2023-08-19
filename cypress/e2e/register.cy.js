@@ -1,9 +1,11 @@
 import { dynamicData } from '../support/randomData';
 
 describe('Create new account', () => {
-    it('New registration successfully/Unable to create an existing user', () => {
-        let userId, accesstoken;
+    let userId, accesstoken;
+    const name = Cypress.env('NAME');
+    const passwd = Cypress.env('PASSWORD');
 
+    it('New registration successfully/Unable to create an existing user', () => {
         cy.createUser(dynamicData).then((resp) => {
             expect(resp.status).to.equal(201);
             expect(resp.body).to.have.property('userID');
@@ -13,11 +15,7 @@ describe('Create new account', () => {
         }).then((r) => {
 
             /* Validate that it is not possible to create a user that already exists */
-            cy.createUser(dynamicData).then((resp) => {
-                expect(resp.status).to.equal(406);
-                expect(resp.body.code).to.equal('1204');
-                expect(resp.body.message).to.equal('User exists!');
-            });
+
 
             /* Call to delete account created to not mess up the bank. */
             userId = r.body.userID;
@@ -63,6 +61,17 @@ describe('Create new account', () => {
                 'one lowercase (\'a\'-\'z\'), one special character and ' +
                 'Password must be eight characters or longer.'
             );
+        });
+    });
+
+    it.only('Create an account with the same data as an existing account', () => {
+        cy.createUser({
+            userName: name,
+            password: passwd
+        }).then((resp) => {
+            expect(resp.status).to.equal(406);
+            expect(resp.body.code).to.equal('1204');
+            expect(resp.body.message).to.equal('User exists!');
         });
     });
 });
