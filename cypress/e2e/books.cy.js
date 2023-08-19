@@ -2,13 +2,16 @@ import { radomNumber } from '../support/randomData';
 
 describe('Books', () => {
     let token, numberIsbn;
-    const name = Cypress.env('NAME');
-    const passwd = Cypress.env('PASSWORD');
-    const userId = Cypress.env('USER_ID');
-    const radomBook = radomNumber();
+    const radomBk = radomNumber();
+    const name = Cypress.env('name');
+    const passwd = Cypress.env('password');
+    const userId = Cypress.env('userId');
 
     beforeEach(() => {
-        cy.loginUser({ userName: name, password: passwd }).then((resp) => {
+        cy.loginUser({
+            userName: name,
+            password: passwd
+        }).then((resp) => {
             token = resp.body.token;
         });
     });
@@ -17,10 +20,10 @@ describe('Books', () => {
         cy.fixture('listBooks').then((list) => {
             cy.getBookList().then((resp) => {
                 expect(resp.status).to.equal(200);
-                expect(resp.body.books[radomBook].isbn).to.equal(list.books[radomBook].isbn);
-                expect(resp.body.books[radomBook].title).to.equal(list.books[radomBook].title);
-                expect(resp.body.books[radomBook].author).to.equal(list.books[radomBook].author);
-                expect(resp.body.books[radomBook].publisher).to.equal(list.books[radomBook].publisher);
+                expect(resp.body.books[radomBk].isbn).to.equal(list.books[radomBk].isbn);
+                expect(resp.body.books[radomBk].title).to.equal(list.books[radomBk].title);
+                expect(resp.body.books[radomBk].author).to.equal(list.books[radomBk].author);
+                expect(resp.body.books[radomBk].publisher).to.equal(list.books[radomBk].publisher);
             });
 
         });
@@ -28,8 +31,12 @@ describe('Books', () => {
 
     it('Add and Remove a book from the favorites list', () => {
         cy.getBookList().then((resp) => {
-            numberIsbn = resp.body.books[radomBook].isbn;
-            cy.addBooksFavorites(userId, token, numberIsbn);
+            numberIsbn = resp.body.books[radomBk].isbn;
+            cy.addBooksFavorites(
+                userId,
+                token,
+                numberIsbn
+            );
         }).then((resp) => {
             expect(resp.status).to.equal(201);
             expect(resp.body).to.have.property('books');

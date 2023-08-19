@@ -1,4 +1,3 @@
-cypress.env.json
 node_modules
 allure-report
 cypress/videos

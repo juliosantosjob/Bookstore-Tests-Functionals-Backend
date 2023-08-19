@@ -49,14 +49,14 @@ Cypress.Commands.add('getListBooks', () => {
     });
 });
 
-Cypress.Commands.add('addBooksFavorites', (userId, token, firstIsbn) => {
+Cypress.Commands.add('addBooksFavorites', (userId, token, numberIsbn) => {
     cy.api({
         method: 'POST',
         url: '/BookStore/v1/Books',
         failOnStatusCode: false,
         body: {
             userId: userId,
-            collectionOfIsbns: [{ isbn: firstIsbn }]
+            collectionOfIsbns: [{ isbn: numberIsbn }]
         },
         headers: { Authorization: `Bearer ${token}` }
     });
