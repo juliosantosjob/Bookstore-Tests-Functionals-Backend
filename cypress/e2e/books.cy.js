@@ -47,4 +47,18 @@ describe('Books', () => {
             });
         });
     });
+
+    it('Add non-existent book', () => {
+        numberIsbn = 'invalid_isbn';
+
+        cy.addBooksFavorites(
+            userId,
+            token,
+            numberIsbn
+        ).then((resp) => {
+            expect(resp.status).to.equal(400);
+            expect(resp.body.code).to.equal('1205');
+            expect(resp.body.message).to.equal('ISBN supplied is not available in Books Collection!');
+        });
+    });
 });

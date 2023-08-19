@@ -19,6 +19,7 @@ Login with invalid username and password - 400
 
 Access a list of available books - 200
 Add and remove a book from the favorites list - 200
+Add non-existent book - 400
 
 ### Delete account ###
 
