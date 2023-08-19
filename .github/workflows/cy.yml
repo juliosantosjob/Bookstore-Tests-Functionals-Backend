@@ -2,10 +2,10 @@ name: Pipe Cy
 
 on:
   push:
+    branches: [main]
   pull_request:
-    branches:
-      - 'main'
-
+    branches: [main]
+    
 jobs: 
   regression-test:
     runs-on: ubuntu-latest
