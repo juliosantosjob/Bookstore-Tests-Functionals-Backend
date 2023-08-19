@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "open": "npx cypress open",
-    "test": "cypress run --config video=false --spec cypress/e2e/** --browser chrome"
+    "test": "npx cypress run"
   },
   "keywords": [],
   "author": "Julio Santos",
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
-    "cypress": "^12.17.3",
+    "cypress": "^12.0.0",
     "cypress-mochawesome-reporter": "^3.5.1",
     "eslint-plugin-cypress": "^2.14.0"
   },

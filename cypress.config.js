@@ -2,7 +2,6 @@ const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
     responseTimeout: 3000,
-    fixturesFolder: false,
     reporter: 'cypress-mochawesome-reporter',
     video: false,
     screenshotOnRunFailure: false,

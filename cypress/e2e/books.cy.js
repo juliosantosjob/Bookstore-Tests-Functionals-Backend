@@ -13,6 +13,7 @@ describe('Books', () => {
         });
     });
 
+    // tenho que ajustar esse cara
     it('Access a list of available books', () => {
         cy.getBookList().then((resp) => {
             expect(resp.status).to.equal(200);

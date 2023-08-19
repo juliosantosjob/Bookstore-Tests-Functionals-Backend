@@ -2,6 +2,8 @@ import { dynamicData } from '../support/randomData';
 
 describe('Create new account', () => {
     it('New registration successfully', () => {
+
+        // Devo deletar as contas criadas no final do processo
         cy.createUser(dynamicData)
             .then((resp) => {
                 expect(resp.status).to.equal(201);
