@@ -16,12 +16,12 @@ jobs:
       - name: Runner Tests
         uses: cypress-io/github-action@v5
         env:
-          BASE_URL: ${{ secrets.BASE_URL }}
-          NAME: ${{ secrets.NAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          USER_ID: ${{ secrets.USER_ID }}
-          build: npm run build
-          start: npm run test
+            baseUrl: ${{ secrets.baseUrl }}
+            name: ${{ secrets.name }}
+            password: ${{ secrets.password }}
+            userId: ${{ secrets.userId }}
+            build: npm run build
+            start: npm run test:report
             
       - name: Deploy to GitHub Pages
         if: always()
