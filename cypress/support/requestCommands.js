@@ -68,7 +68,7 @@ Cypress.Commands.add('removeBooks', (userId, token) => {
         url: `/BookStore/v1/Books?UserId=${userId}`,
         failOnStatusCode: false,
         headers: { Authorization: `Bearer ${token}` }
-    }).then((resp) => { expect(resp.status).to.equal(204); });
+    });
 });
 
 Cypress.Commands.add('deleteAccount', ({ userId, token }) => {

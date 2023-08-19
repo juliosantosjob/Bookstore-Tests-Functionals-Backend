@@ -8,10 +8,6 @@ describe('Delete', () => {
         cy.loginUser(dynamicData).then((resp) => { accesstoken = resp.body.token; });
     });
 
-    afterEach(() => { 
-        cy.deleteAccount({ userId: userId, token: accesstoken }); 
-    });
-
     it('Delete user', () => {
         cy.deleteAccount({
             userId: userId,
