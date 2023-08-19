@@ -1,4 +1,4 @@
-name: Pipe Cy
+name: Pipe
 
 on:
   push:
@@ -7,14 +7,13 @@ on:
       - 'main'
 
 jobs:
-  cypress-run:
-    name: Execution backend tests
+  regression-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout in project
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup cypress
+      - name: Runner Tests
         uses: cypress-io/github-action@v5
         with:
           build: npm run build
