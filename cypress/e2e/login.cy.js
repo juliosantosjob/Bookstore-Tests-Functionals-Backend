@@ -1,8 +1,8 @@
 require('dotenv').config();
 
 describe('Login', () => {
-    const name = Cypress.env('name');
-    const passwd = Cypress.env('password');
+    const name = Cypress.env('NAME');
+    const passwd = Cypress.env('PASSWORD');
 
     it('login successfully', () => {
         cy.loginUser({ userName: name, password: passwd }).then((resp) => {

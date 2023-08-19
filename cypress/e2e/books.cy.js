@@ -3,15 +3,12 @@ import { radomNumber } from '../support/randomData';
 describe('Books', () => {
     let token, numberIsbn;
     const radomBk = radomNumber();
-    const name = Cypress.env('name');
-    const passwd = Cypress.env('password');
-    const userId = Cypress.env('userId');
+    const name = Cypress.env('NAME');
+    const passwd = Cypress.env('PASSWORD');
+    const userId = Cypress.env('USER_ID');
 
     beforeEach(() => {
-        cy.loginUser({
-            userName: name,
-            password: passwd
-        }).then((resp) => {
+        cy.loginUser({ userName: name, password: passwd }).then((resp) => {
             token = resp.body.token;
         });
     });
