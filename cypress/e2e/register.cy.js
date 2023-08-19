@@ -14,9 +14,6 @@ describe('Create new account', () => {
             expect(resp.body.username).to.equal(dynamicData.userName);
         }).then((r) => {
 
-            /* Validate that it is not possible to create a user that already exists */
-
-
             /* Call to delete account created to not mess up the bank. */
             userId = r.body.userID;
             cy.loginUser(dynamicData).then((r) => {
