@@ -1,5 +1,3 @@
-/// <reference types='cypress' />
-
 import { dynamicData } from '../support/randomData';
 
 describe('Delete', () => {
