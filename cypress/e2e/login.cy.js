@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 describe('Login', () => {
     const name = Cypress.env('NAME');
     const passwd = Cypress.env('PASSWORD');
