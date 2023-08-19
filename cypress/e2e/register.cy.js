@@ -1,16 +1,31 @@
 import { dynamicData } from '../support/randomData';
 
 describe('Create new account', () => {
-    it('New registration successfully', () => {
+    it('New registration successfully/Unable to create an existing user', () => {
+        let userId, accesstoken;
 
-        // Devo deletar as contas criadas no final do processo
-        cy.createUser(dynamicData)
-            .then((resp) => {
-                expect(resp.status).to.equal(201);
-                expect(resp.body).to.have.property('userID');
-                expect(resp.body).to.have.property('books');
-                expect(resp.body.username).to.equal(dynamicData.userName);
+        cy.createUser(dynamicData).then((resp) => {
+            expect(resp.status).to.equal(201);
+            expect(resp.body).to.have.property('userID');
+            expect(resp.body).to.have.property('books');
+            expect(resp.body.books).to.have.length(0);
+            expect(resp.body.username).to.equal(dynamicData.userName);
+        }).then((r) => {
+
+            /* Validate that it is not possible to create a user that already exists */
+            cy.createUser(dynamicData).then((resp) => {
+                expect(resp.status).to.equal(406);
+                expect(resp.body.code).to.equal('1204');
+                expect(resp.body.message).to.equal('User exists!');
             });
+
+            /* Call to delete account created to not mess up the bank. */
+            userId = r.body.userID;
+            cy.loginUser(dynamicData).then((r) => {
+                accesstoken = r.body.token;
+                cy.deleteAccount({ userId: userId, token: accesstoken });
+            });
+        });
     });
 
     it('Registration with blank username', () => {
@@ -48,14 +63,6 @@ describe('Create new account', () => {
                 'one lowercase (\'a\'-\'z\'), one special character and ' +
                 'Password must be eight characters or longer.'
             );
-        });
-    });
-
-    it('Registration an account with the same data as an existing account', () => {
-        cy.createUser(dynamicData).then((resp) => {
-            expect(resp.status).to.equal(406);
-            expect(resp.body.code).to.equal('1204');
-            expect(resp.body.message).to.equal('User exists!');
         });
     });
 });

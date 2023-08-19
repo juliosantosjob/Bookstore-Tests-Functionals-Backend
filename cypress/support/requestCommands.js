@@ -14,7 +14,7 @@ Cypress.Commands.add('createUser', ({ userName, password }) => {
 Cypress.Commands.add('getProfile', (userId, token) => {
     cy.api({
         method: 'GET',
-        url:`/Account/v1/User/${userId}`,
+        url: `/Account/v1/User/${userId}`,
         failOnStatusCode: false,
         headers: { Authorization: `Bearer ${token}` }
     });
@@ -49,7 +49,7 @@ Cypress.Commands.add('getListBooks', () => {
     });
 });
 
-Cypress.Commands.add('addBooksFavorites', ( userId, token, firstIsbn ) => {
+Cypress.Commands.add('addBooksFavorites', (userId, token, firstIsbn) => {
     cy.api({
         method: 'POST',
         url: '/BookStore/v1/Books',
@@ -68,7 +68,7 @@ Cypress.Commands.add('removeBooks', (userId, token) => {
         url: `/BookStore/v1/Books?UserId=${userId}`,
         failOnStatusCode: false,
         headers: { Authorization: `Bearer ${token}` }
-    });
+    }).then((resp) => { expect(resp.status).to.equal(204); });
 });
 
 Cypress.Commands.add('deleteAccount', ({ userId, token }) => {
