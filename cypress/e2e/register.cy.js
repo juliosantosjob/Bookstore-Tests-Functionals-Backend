@@ -61,7 +61,7 @@ describe('Create new account', () => {
         });
     });
 
-    it.only('Create an account with the same data as an existing account', () => {
+    it('Create an account with the same data as an existing account', () => {
         cy.createUser({
             userName: name,
             password: passwd
