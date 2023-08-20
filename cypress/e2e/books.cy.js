@@ -22,7 +22,6 @@ describe('Books', () => {
                 expect(resp.body.books[radomBk].author).to.equal(list.books[radomBk].author);
                 expect(resp.body.books[radomBk].publisher).to.equal(list.books[radomBk].publisher);
             });
-
         });
     });
 
