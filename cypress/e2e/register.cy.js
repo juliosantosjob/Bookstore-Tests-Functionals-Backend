@@ -5,7 +5,7 @@ describe('Create new account', () => {
     const name = Cypress.env('NAME');
     const passwd = Cypress.env('PASSWORD');
 
-    it('New registration successfully/Unable to create an existing user', () => {
+    it('New registration', () => {
         cy.createUser(dynamicData).then((resp) => {
             expect(resp.status).to.equal(201);
             expect(resp.body).to.have.property('userID');
