@@ -4,6 +4,7 @@ Frameworks & tools:
 - Cypress
 - GitHub Actions
 - GitHub Pages
+- Mochawesome-reporter: <a href='https://juliosantosjob.github.io/BookStore-Tests-Functionals-Backend/'>The last execution.</a>
 
   Api validated: <a href="https://bookstore.toolsqa.com">Tools QA</a>
  ##
