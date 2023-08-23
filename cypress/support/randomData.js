@@ -5,7 +5,7 @@ export const dynamicData = {
     password: faker.internet.password().substring(7) + 'M@123',
 };
 
-export function radomNumber() {
+export function randomNumber() {
     const number = [1, 2, 3, 4, 5, 6, 7];
     const random = Math.floor(Math.random() * number.length);
 

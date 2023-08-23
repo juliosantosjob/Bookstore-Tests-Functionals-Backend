@@ -1,32 +1,32 @@
-import { radomNumber } from '../support/randomData';
+import { randomNumber } from '../support/randomData';
 
 describe('Books', () => {
     let token, numberIsbn;
-    const radomBk = radomNumber();
+    const randomBooks = randomNumber();
     const name = Cypress.env('NAME');
     const passwd = Cypress.env('PASSWORD');
     const userId = Cypress.env('USER_ID');
 
     beforeEach(() => {
         cy.loginUser({ userName: name, password: passwd })
-            .then((resp) => { token = resp.body.token; });
+            .then(({ body }) => { token = body.token; });
         cy.getBookList().as('getBookList');
     });
 
     it('Access a list of available books', () => {
         cy.fixture('listBooks').then((list) => {
-            cy.get('@getBookList').then((resp) => {
-                expect(resp.status).to.equal(200);
-                expect(resp.body.books[radomBk].isbn).to.equal(list.books[radomBk].isbn);
-                expect(resp.body.books[radomBk].title).to.equal(list.books[radomBk].title);
-                expect(resp.body.books[radomBk].author).to.equal(list.books[radomBk].author);
-                expect(resp.body.books[radomBk].publisher).to.equal(list.books[radomBk].publisher);
+            cy.get('@getBookList').then(({ status, body }) => {
+                expect(status).to.equal(200);
+                expect(body.books[randomBooks].isbn).to.equal(list.books[randomBooks].isbn);
+                expect(body.books[randomBooks].title).to.equal(list.books[randomBooks].title);
+                expect(body.books[randomBooks].author).to.equal(list.books[randomBooks].author);
+                expect(body.books[randomBooks].publisher).to.equal(list.books[randomBooks].publisher);
             });
         });
     });
 
     it('Add and Remove a book from the favorites list', () => {
-        cy.get('@getBookList').its(`body.books[${radomBk}].isbn`)
+        cy.get('@getBookList').its(`body.books[${randomBooks}].isbn`)
             .then((isbn) => {
                 numberIsbn = isbn;
                 cy.addBooksFavorites(
@@ -34,15 +34,15 @@ describe('Books', () => {
                     token,
                     numberIsbn
                 );
-            }).then((resp) => {
-                expect(resp.status).to.equal(201);
-                expect(resp.body).to.have.property('books');
-                expect(resp.body.books[0].isbn).to.equal(numberIsbn);
+            }).then(({ status, body }) => {
+                expect(status).to.equal(201);
+                expect(body).to.have.property('books');
+                expect(body.books[0].isbn).to.equal(numberIsbn);
 
                 cy.removeBooks(userId, token).then(() => {
-                    cy.getProfile(userId, token).then((resp) => {
-                        expect(resp.body.books).to.be.an('array');
-                        expect(resp.body.books).to.have.length(0);
+                    cy.getProfile(userId, token).then(({ body }) => {
+                        expect(body.books).to.be.an('array');
+                        expect(body.books).to.have.length(0);
                     });
                 });
             });
@@ -55,10 +55,10 @@ describe('Books', () => {
             userId,
             token,
             numberIsbn
-        ).then((resp) => {
-            expect(resp.status).to.equal(400);
-            expect(resp.body.code).to.equal('1205');
-            expect(resp.body.message).to.equal('ISBN supplied is not available in Books Collection!');
+        ).then(({ status, body }) => {
+            expect(status).to.equal(400);
+            expect(body.code).to.equal('1205');
+            expect(body.message).to.equal('ISBN supplied is not available in Books Collection!');
         });
     });
 });

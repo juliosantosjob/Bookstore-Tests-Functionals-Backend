@@ -4,17 +4,17 @@ describe('Delete', () => {
     let userId, accesstoken;
 
     beforeEach(() => {
-        cy.createUser(dynamicData).then((resp) => { userId = resp.body.userID; });
-        cy.loginUser(dynamicData).then((resp) => { accesstoken = resp.body.token; });
+        cy.createUser(dynamicData).then(({ body }) => { userId = body.userID; });
+        cy.loginUser(dynamicData).then(({ body }) => { accesstoken = body.token; });
     });
 
     it('Delete user', () => {
         cy.deleteAccount({
             userId: userId,
             token: accesstoken
-        }).then((resp) => {
-            expect(resp.body).to.be.empty;
-            expect(resp.status).to.equal(204);
+        }).then(({ status, body }) => {
+            expect(status).to.equal(204);
+            expect(body).to.be.empty;
         });
     });
 
@@ -22,10 +22,10 @@ describe('Delete', () => {
         cy.deleteAccount({
             userId: 'invalid_user_id',
             token: accesstoken
-        }).then((resp) => {
-            expect(resp.status).to.equal(200);
-            expect(resp.body.code).to.equal('1207');
-            expect(resp.body.message).to.equal('User Id not correct!');
+        }).then(({ status, body }) => {
+            expect(status).to.equal(200);
+            expect(body.code).to.equal('1207');
+            expect(body.message).to.equal('User Id not correct!');
         });
     });
 });
