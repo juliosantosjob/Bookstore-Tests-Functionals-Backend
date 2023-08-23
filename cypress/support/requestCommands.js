@@ -41,14 +41,6 @@ Cypress.Commands.add('getBookList', () => {
     });
 });
 
-Cypress.Commands.add('getListBooks', () => {
-    cy.api({
-        method: 'GET',
-        url: '/BookStore/v1/Books',
-        failOnStatusCode: false
-    });
-});
-
 Cypress.Commands.add('addBooksFavorites', (userId, token, numberIsbn) => {
     cy.api({
         method: 'POST',
