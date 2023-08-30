@@ -7,6 +7,14 @@ describe('Books', () => {
     const passwd = Cypress.env('PASSWORD');
     const userId = Cypress.env('USER_ID');
 
+    beforeEach(() => {
+        cy.loginUser({ 
+            userName: name,
+            password: passwd 
+        }).its('body.token').then((resp) => { token = resp; });
+        cy.getBookList().as('getBookList');
+    });
+
     it('Access a list of available books', () => {
         cy.fixture('listBooks').then((list) => {
             cy.get('@getBookList').then(({ status, body }) => {
@@ -19,16 +27,8 @@ describe('Books', () => {
         });
     });
 
-    beforeEach(() => {
-        cy.loginUser({ 
-            userName: name,
-            password: passwd 
-        }).its('body.token').then((resp) => { token = resp; });
-        cy.getBookList().as('getBookList');
-    });
-
     it('Add and Remove a book from the favorites list', () => {
-        cy.get('@getBookList').its(`body.books[${5}].isbn`)
+        cy.get('@getBookList').its(`body.books[${randomBooks}].isbn`)
             .then((isbn) => {
                 numberIsbn = isbn;
                 cy.addBooksFavorites(
