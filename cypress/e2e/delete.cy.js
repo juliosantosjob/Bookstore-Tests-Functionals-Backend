@@ -3,7 +3,7 @@ import { dynamicData } from '../support/randomData';
 describe('Delete', () => {
     let userId, accesstoken;
 
-    beforeEach(() => {
+    before(() => {
         cy.createUser(dynamicData).then(({ body }) => { userId = body.userID; });
         cy.loginUser(dynamicData).then(({ body }) => { accesstoken = body.token; });
     });
