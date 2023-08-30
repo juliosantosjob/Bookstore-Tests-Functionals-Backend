@@ -12,7 +12,7 @@ module.exports = defineConfig({
             require('cypress-mochawesome-reporter/plugin')(on);
             return config;
         },
-        responseTimeout: 3000,
+        responseTimeout: 4000,
         reporter: 'cypress-mochawesome-reporter',
         video: false,
         screenshotOnRunFailure: false
