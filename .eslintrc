@@ -5,7 +5,7 @@
       "cypress/no-assigning-return-values": "error",
       "cypress/assertion-before-screenshot": "off",
       "cypress/no-unnecessary-waiting": "off",
-      "cypress/no-async-tests": "error",
+      "cypress/no-async-tests": "always",
       "cypress/no-pause": "off",
       "camelcase": [ 2, 
       { 

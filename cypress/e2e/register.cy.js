@@ -6,12 +6,12 @@ describe('Create new account', () => {
     const passwd = Cypress.env('PASSWORD');
 
     it('New registration', () => {
-        cy.createUser(dynamicData).then(({ status, body }) => {
-            expect(status).to.equal(201);
-            expect(body).to.have.property('userID');
-            expect(body).to.have.property('books');
-            expect(body.books).to.have.length(0);
-            expect(body.username).to.equal(dynamicData.userName);
+        cy.createUser(dynamicData).then(async ({ status, body }) => {
+            await expect(status).to.equal(201);
+            await expect(body).to.have.property('userID');
+            await expect(body).to.have.property('books');
+            await expect(body.books).to.have.length(0);
+            await expect(body.username).to.equal(dynamicData.userName);
         }).then(({ body }) => {
 
             /* Call to delete account created to not mess up the bank. */
@@ -27,10 +27,10 @@ describe('Create new account', () => {
         cy.createUser({
             userName: '',
             password: dynamicData.password
-        }).then(({ body, status }) => {
-            expect(status).to.equal(400);
-            expect(body.code).to.equal('1200');
-            expect(body.message).to.equal('UserName and Password required.');
+        }).then(async ({ body, status }) => {
+            await expect(status).to.equal(400);
+            await expect(body.code).to.equal('1200');
+            await expect(body.message).to.equal('UserName and Password required.');
         });
     });
 
@@ -38,10 +38,10 @@ describe('Create new account', () => {
         cy.createUser({
             userName: '',
             password: dynamicData.password
-        }).then(({ body, status }) => {
-            expect(status).to.equal(400);
-            expect(body.code).to.equal('1200');
-            expect(body.message).to.equal('UserName and Password required.');
+        }).then(async ({ body, status }) => {
+            await expect(status).to.equal(400);
+            await expect(body.code).to.equal('1200');
+            await expect(body.message).to.equal('UserName and Password required.');
         });
     });
 
@@ -49,10 +49,10 @@ describe('Create new account', () => {
         cy.createUser({
             userName: dynamicData.userName,
             password: 'test123'
-        }).then(({ body, status }) => {
-            expect(status).to.equal(400);
-            expect(body.code).to.equal('1300');
-            expect(body.message).to.equal(
+        }).then(async ({ body, status }) => {
+            await expect(status).to.equal(400);
+            await expect(body.code).to.equal('1300');
+            await expect(body.message).to.equal(
                 'Passwords must have at least one non alphanumeric character, ' +
                 'one digit (\'0\'-\'9\'), one uppercase (\'A\'-\'Z\'), ' +
                 'one lowercase (\'a\'-\'z\'), one special character and ' +
@@ -65,10 +65,10 @@ describe('Create new account', () => {
         cy.createUser({
             userName: name,
             password: passwd
-        }).then(({ body, status }) => {
-            expect(status).to.equal(406);
-            expect(body.code).to.equal('1204');
-            expect(body.message).to.equal('User exists!');
+        }).then(async ({ body, status }) => {
+            await expect(status).to.equal(406);
+            await expect(body.code).to.equal('1204');
+            await expect(body.message).to.equal('User exists!');
         });
     });
 });

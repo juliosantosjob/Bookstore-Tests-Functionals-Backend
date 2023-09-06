@@ -12,9 +12,9 @@ describe('Delete', () => {
         cy.deleteAccount({
             userId: userId,
             token: accesstoken
-        }).then(({ status, body }) => {
-            expect(status).to.equal(204);
-            expect(body).to.be.empty;
+        }).then(async ({ status, body }) => {
+            await expect(status).to.equal(204);
+            await expect(body).to.be.empty;
         });
     });
 
@@ -22,10 +22,10 @@ describe('Delete', () => {
         cy.deleteAccount({
             userId: 'invalid_user_id',
             token: accesstoken
-        }).then(({ status, body }) => {
-            expect(status).to.equal(200);
-            expect(body.code).to.equal('1207');
-            expect(body.message).to.equal('User Id not correct!');
+        }).then(async ({ status, body }) => {
+            await expect(status).to.equal(200);
+            await expect(body.code).to.equal('1207');
+            await expect(body.message).to.equal('User Id not correct!');
         });
     });
 });
