@@ -11,9 +11,7 @@ describe('Books', () => {
         cy.loginUser({
             userName: name,
             password: passwd
-        }).its('body.token').then((resp) => { 
-            token = resp; 
-        });
+        }).then(({ body }) => { token = body.token; });
         cy.getBookList().as('getBookList');
     });
 
