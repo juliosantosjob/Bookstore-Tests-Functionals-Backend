@@ -13,7 +13,7 @@ jobs:
   regression-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout 🛎
         uses: actions/checkout@v3
       
       - name: cache clear
@@ -22,8 +22,15 @@ jobs:
       - name: cypress install
         run: npx cypress install
 
-      - name: Running with tests
+      - name: Run Cypress Tests 🧪
         uses: cypress-io/github-action@v5
+        with:
+          wait-on-timeout: 60
+          browser: chrome
+          record: true
+          headed: true
+          group: 'API-Tests-Cypress'
+          spec: cypress/e2e/*.cy.js
         env:
           BASE_URL: ${{secrets.BASE_URL}}
           NAME: ${{secrets.NAME}}
