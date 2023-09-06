@@ -16,13 +16,13 @@ describe('Books', () => {
     });
 
     it('Access a list of available books', () => {
-        cy.fixture('listBooks').then(async (list) => {
-            cy.get('@getBookList').then(async ({ status, body }) => {
-                await expect(status).to.equal(200);
-                await expect(body.books[randomBooks].isbn).to.equal(list.books[randomBooks].isbn);
-                await expect(body.books[randomBooks].title).to.equal(list.books[randomBooks].title);
-                await expect(body.books[randomBooks].author).to.equal(list.books[randomBooks].author);
-                await expect(body.books[randomBooks].publisher).to.equal(list.books[randomBooks].publisher);
+        cy.fixture('listBooks').then((list) => {
+            cy.get('@getBookList').then(({ status, body }) => {
+                expect(status).to.equal(200);
+                expect(body.books[randomBooks].isbn).to.equal(list.books[randomBooks].isbn);
+                expect(body.books[randomBooks].title).to.equal(list.books[randomBooks].title);
+                expect(body.books[randomBooks].author).to.equal(list.books[randomBooks].author);
+                expect(body.books[randomBooks].publisher).to.equal(list.books[randomBooks].publisher);
             });
         });
     });
@@ -37,15 +37,15 @@ describe('Books', () => {
                     token,
                     numberIsbn
                 );
-            }).then(async ({ status, body }) => {
-                await expect(status).to.equal(201);
-                await expect(body).to.have.property('books');
-                await expect(body.books[0].isbn).to.equal(numberIsbn);
+            }).then(({ status, body }) => {
+                expect(status).to.equal(201);
+                expect(body).to.have.property('books');
+                expect(body.books[0].isbn).to.equal(numberIsbn);
 
                 cy.removeBooks(userId, token).then(() => {
-                    cy.getProfile(userId, token).then(async ({ body }) => {
-                        await expect(body.books).to.be.an('array');
-                        await expect(body.books).to.have.length(0);
+                    cy.getProfile(userId, token).then(({ body }) => {
+                        expect(body.books).to.be.an('array');
+                        expect(body.books).to.have.length(0);
                     });
                 });
             });
@@ -58,10 +58,10 @@ describe('Books', () => {
             userId,
             token,
             numberIsbn
-        ).then(async ({ status, body }) => {
-            await expect(status).to.equal(400);
-            await expect(body.code).to.equal('1205');
-            await expect(body.message).to.equal('ISBN supplied is not available in Books Collection!');
+        ).then(({ status, body }) => {
+            expect(status).to.equal(400);
+            expect(body.code).to.equal('1205');
+            expect(body.message).to.equal('ISBN supplied is not available in Books Collection!');
         });
     });
 });
