@@ -1,11 +1,15 @@
 import { randomNumber } from '../support/randomData';
 
 describe('Books', () => {
-    let token, numberIsbn;
+    const { USER_ID, NAME, PASSWORD } = Cypress.env();
+
+    let token;
+    let numberIsbn;
+    let userId = USER_ID;
+    
     const randomBooks = randomNumber();
-    const name = Cypress.env('NAME');
-    const passwd = Cypress.env('PASSWORD');
-    const userId = Cypress.env('USER_ID');
+    const name = NAME;
+    const passwd = PASSWORD;
 
     beforeEach(() => {
         cy.getBookList().as('getBookList');
@@ -63,6 +67,34 @@ describe('Books', () => {
                 expect(status).to.equal(400);
                 expect(body.code).to.equal('1205');
                 expect(body.message).to.equal('ISBN supplied is not available in Books Collection!');
+            });
+        });
+
+        it('Added a book to my list without authorization', () => {
+            token = 'invalid_token';
+
+            cy.addBooksFavorites(
+                userId,
+                token,
+                numberIsbn
+            ).then(({ status, body }) => {
+                expect(status).to.equal(401);
+                expect(body.code).to.equal('1200');
+                expect(body.message).to.equal('User not authorized!');
+            });
+        });
+
+        it('Added a book to my list with userid not correct', () => {
+            userId = 'invalid_userId';
+
+            cy.addBooksFavorites(
+                userId,
+                token,
+                numberIsbn
+            ).then(({ status, body }) => {
+                expect(status).to.equal(401);
+                expect(body.code).to.equal('1207');
+                expect(body.message).to.equal('User Id not correct!');
             });
         });
     });
