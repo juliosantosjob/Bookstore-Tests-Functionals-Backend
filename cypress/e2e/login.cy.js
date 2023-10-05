@@ -1,6 +1,7 @@
 describe('Login', () => {
-    const name = Cypress.env('NAME');
-    const passwd = Cypress.env('PASSWORD');
+    const { NAME, PASSWORD } = Cypress.env();
+    const name = NAME;
+    const passwd = PASSWORD;
 
     it('login successfully', () => {
         cy.loginUser({ userName: name, password: passwd }).then(({ status, body }) => {
