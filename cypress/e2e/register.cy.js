@@ -1,9 +1,12 @@
 import { dynamicData } from '../support/randomData';
 
-describe('Create new account', () => {
-    let userId, accesstoken;
-    const name = Cypress.env('NAME');
-    const passwd = Cypress.env('PASSWORD');
+describe('Create new account', () => {    
+    const { NAME, PASSWORD } = Cypress.env();
+    const name = NAME;
+    const passwd = PASSWORD;
+
+    let userId;
+    let accesstoken;
 
     it('New registration', () => {
         cy.createUser(dynamicData).then(({ status, body }) => {
