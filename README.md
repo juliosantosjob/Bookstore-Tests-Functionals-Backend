@@ -8,6 +8,7 @@ Make sure you have the following tools installed on your machine:
 
 - Node.js: [Download and install the latest version of Node.js](https://nodejs.org/)
 - npm: Usually installed automatically with Node.js, but you can check by typing `npm -v` in the terminal.
+- Git: to download the project
 
 ## Configuration
 
