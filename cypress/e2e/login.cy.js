@@ -3,7 +3,7 @@ describe('Login', () => {
     const name = NAME;
     const passwd = PASSWORD;
 
-    it('login successfully', () => {
+    it('Login successfully', () => {
         cy.loginUser({ userName: name, password: passwd }).then(({ status, body }) => {
             expect(status).to.equal(200);
             expect(body).to.have.property('token');
