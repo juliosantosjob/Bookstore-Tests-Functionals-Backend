@@ -46,11 +46,11 @@ Cypress.Commands.add('addBooksFavorites', (userId, token, numberIsbn) => {
         method: 'POST',
         url: '/BookStore/v1/Books',
         failOnStatusCode: false,
+        headers: { Authorization: `Bearer ${token}` },
         body: {
             userId: userId,
             collectionOfIsbns: [{ isbn: numberIsbn }]
-        },
-        headers: { Authorization: `Bearer ${token}` }
+        }
     });
 });
 
