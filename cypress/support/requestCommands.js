@@ -4,10 +4,7 @@ Cypress.Commands.add('createUser', ({ userName, password }) => {
         url: '/Account/v1/User',
         headers: { 'Content-Type': 'application/json ' },
         failOnStatusCode: false,
-        body: {
-            userName: userName,
-            password: password,
-        }
+        body: { userName: userName, password: password }
     });
 });
 
@@ -26,10 +23,7 @@ Cypress.Commands.add('loginUser', ({ userName, password }) => {
         url: '/Account/v1/GenerateToken',
         headers: { 'Content-Type': 'application/json ' },
         failOnStatusCode: false,
-        body: {
-            userName: userName,
-            password: password,
-        }
+        body: { userName: userName, password: password }
     });
 });
 
@@ -47,10 +41,7 @@ Cypress.Commands.add('addBooksFavorites', (userId, token, numberIsbn) => {
         url: '/BookStore/v1/Books',
         failOnStatusCode: false,
         headers: { Authorization: `Bearer ${token}` },
-        body: {
-            userId: userId,
-            collectionOfIsbns: [{ isbn: numberIsbn }]
-        }
+        body: { userId: userId, collectionOfIsbns: [{ isbn: numberIsbn }] }
     });
 });
 

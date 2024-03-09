@@ -1,39 +1,33 @@
 import { randomNumber } from '../support/randomData';
+import { userAuth } from '../payloads/login';
 
 describe('Books', () => {
-    const { USER_ID, NAME, PASSWORD } = Cypress.env();
+    let token, numberIsbn, userId = Cypress.env('USER_ID');
+    const rand = randomNumber();
 
-    let token;
-    let numberIsbn;
-    let userId = USER_ID;
-    
-    const randomBooks = randomNumber();
-    const name = NAME;
-    const passwd = PASSWORD;
-
-    beforeEach(() => {
-        cy.getBookList().as('getBookList');
-    });
+    beforeEach(() => { cy.getBookList().as('getBookList'); });
 
     it('Access a list of available books', () => {
         cy.fixture('listBooks').then((list) => {
             cy.get('@getBookList').then(({ status, body }) => {
                 expect(status).to.equal(200);
-                expect(body.books[randomBooks].isbn).to.equal(list.books[randomBooks].isbn);
-                expect(body.books[randomBooks].title).to.equal(list.books[randomBooks].title);
-                expect(body.books[randomBooks].author).to.equal(list.books[randomBooks].author);
+                expect(body.books[rand].isbn).to.equal(list.books[rand].isbn);
+                expect(body.books[rand].title).to.equal(list.books[rand].title);
+                expect(body.books[rand].author).to.equal(list.books[rand].author);
             });
         });
     });
 
     context('When authenticated', () => {
         before(() => {
-            cy.loginUser({ userName: name, password: passwd })
-                .then(({ body }) => { token = body.token; });
+            cy.loginUser(userAuth)
+                .its('body.token')
+                .then((resp) => { token = resp; });
         });
 
         it('Add and Remove a book from the favorites list', () => {
-            cy.get('@getBookList').its(`body.books[${randomBooks}].isbn`)
+            cy.get('@getBookList')
+                .its(`body.books[${rand}].isbn`)
                 .then((isbn) => {
                     numberIsbn = isbn;
 
@@ -44,14 +38,11 @@ describe('Books', () => {
                     );
                 }).then(({ status, body }) => {
                     expect(status).to.equal(201);
-                    expect(body).to.have.property('books');
                     expect(body.books[0].isbn).to.equal(numberIsbn);
 
                     cy.removeBooks(userId, token).then(() => {
-                        cy.getProfile(userId, token).then(({ body }) => {
-                            expect(body.books).to.be.an('array');
-                            expect(body.books).to.have.length(0);
-                        });
+                        cy.getProfile(userId, token)
+                            .then(({ body }) => { expect(body.books).to.be.empty; });
                     });
                 });
         });

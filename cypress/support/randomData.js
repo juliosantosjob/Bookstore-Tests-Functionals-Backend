@@ -6,8 +6,7 @@ export const dynamicData = {
 };
 
 export function randomNumber() {
-    const number = [1, 2, 3, 4, 5, 6, 7];
-    const random = Math.floor(Math.random() * number.length);
-
-    return number[random];
-};
+    const numbers = [1, 2, 3, 4, 5, 6, 7];
+    const randomIndex = Math.floor(Math.random() * numbers.length);
+    return numbers[randomIndex];
+}
