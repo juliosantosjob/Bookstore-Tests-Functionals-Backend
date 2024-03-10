@@ -5,7 +5,7 @@ describe('Books', () => {
     let token, numberIsbn, userId = Cypress.env('USER_ID');
     const rand = randomNumber();
 
-    beforeEach(() => { cy.getBookList().as('getBookList'); });
+    beforeEach(() => cy.getBookList().as('getBookList'));
 
     it('Access a list of available books', () => {
         cy.fixture('listBooks').then((list) => {
