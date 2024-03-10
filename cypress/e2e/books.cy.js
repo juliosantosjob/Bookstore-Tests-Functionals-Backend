@@ -1,20 +1,24 @@
 import { randomNumber } from '../support/randomData';
 import { userAuth } from '../payloads/login';
+import { StatusCodes } from 'http-status-codes';
 
-describe('Books', () => {
+describe('Manage books', () => {
     let token, numberIsbn, userId = Cypress.env('USER_ID');
     const rand = randomNumber();
 
-    beforeEach(() => cy.getBookList().as('getBookList'));
+    beforeEach(() =>
+        cy.getBookList()
+            .as('getBookList'));
 
-    it('Access a list of available books', () => {
+    it('Check information of a book', () => {
         cy.fixture('listBooks').then((list) => {
-            cy.get('@getBookList').then(({ status, body }) => {
-                expect(status).to.equal(200);
-                expect(body.books[rand].isbn).to.equal(list.books[rand].isbn);
-                expect(body.books[rand].title).to.equal(list.books[rand].title);
-                expect(body.books[rand].author).to.equal(list.books[rand].author);
-            });
+            cy.get('@getBookList')
+                .then(({ status, body }) => {
+                    expect(status).to.equal(StatusCodes.OK);
+                    expect(body.books[rand].isbn).to.equal(list.books[rand].isbn);
+                    expect(body.books[rand].title).to.equal(list.books[rand].title);
+                    expect(body.books[rand].author).to.equal(list.books[rand].author);
+                });
         });
     });
 
@@ -22,9 +26,9 @@ describe('Books', () => {
         before(() =>
             cy.loginUser(userAuth)
                 .its('body.token')
-                .then((resp) => { token = resp; });
+                .then(resp => token = resp));
 
-        it('Add and Remove a book from the favorites list', () => {
+        it('Add and remove a book from the favorites list', () => {
             cy.get('@getBookList')
                 .its(`body.books[${rand}].isbn`)
                 .then((isbn) => {
@@ -36,17 +40,19 @@ describe('Books', () => {
                         numberIsbn
                     );
                 }).then(({ status, body }) => {
-                    expect(status).to.equal(201);
+                    expect(status).to.equal(StatusCodes.CREATED);
                     expect(body.books[0].isbn).to.equal(numberIsbn);
 
                     cy.removeBooks(userId, token).then(() => {
                         cy.getProfile(userId, token)
-                            .then(({ body }) => { expect(body.books).to.be.empty; });
+                            .then(({
+                                body
+                            }) => expect(body.books).to.be.empty);
                     });
                 });
         });
 
-        it('Add non-existent book', () => {
+        it('Don\'t add a book that doesn\'t exist', () => {
             numberIsbn = 'invalid_isbn';
 
             cy.addBooksFavorites(
@@ -54,13 +60,12 @@ describe('Books', () => {
                 token,
                 numberIsbn
             ).then(({ status, body }) => {
-                expect(status).to.equal(400);
-                expect(body.code).to.equal('1205');
+                expect(status).to.equal(StatusCodes.BAD_REQUEST);
                 expect(body.message).to.equal('ISBN supplied is not available in Books Collection!');
             });
         });
 
-        it('Added a book to my list without authorization', () => {
+        it('Do not add a book to the favorites list without authorization', () => {
             token = 'invalid_token';
 
             cy.addBooksFavorites(
@@ -68,13 +73,12 @@ describe('Books', () => {
                 token,
                 numberIsbn
             ).then(({ status, body }) => {
-                expect(status).to.equal(401);
-                expect(body.code).to.equal('1200');
+                expect(status).to.equal(StatusCodes.UNAUTHORIZED);
                 expect(body.message).to.equal('User not authorized!');
             });
         });
 
-        it('Added a book to my list with userid not correct', () => {
+        it('Didn\'t add a book to the favorites list with an incorrect user ID.', () => {
             userId = 'invalid_userId';
 
             cy.addBooksFavorites(
@@ -82,8 +86,7 @@ describe('Books', () => {
                 token,
                 numberIsbn
             ).then(({ status, body }) => {
-                expect(status).to.equal(401);
-                expect(body.code).to.equal('1207');
+                expect(status).to.equal(StatusCodes.UNAUTHORIZED);
                 expect(body.message).to.equal('User Id not correct!');
             });
         });

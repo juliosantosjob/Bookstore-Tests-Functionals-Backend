@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "cypress-plugin-api": "^2.11.1",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "http-status": "^1.7.4",
+    "http-status-codes": "^2.3.0"
   }
 }

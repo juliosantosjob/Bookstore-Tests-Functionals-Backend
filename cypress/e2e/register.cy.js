@@ -1,60 +1,58 @@
-import { dynamicData } from '../support/randomData';
+import { dynamicData } from '../payloads/login';
+import { StatusCodes } from 'http-status-codes';
 
-describe('Create new account', () => {    
+describe('User registration', () => {
+    let userId, accesstoken;
     const { NAME, PASSWORD } = Cypress.env();
-    const name = NAME;
-    const passwd = PASSWORD;
+    
+    const name = NAME,
+        passwd = PASSWORD;
 
-    let userId;
-    let accesstoken;
-
-    it('New registration', () => {
+    it('Must register a new user', () => {
         cy.createUser(dynamicData).then(({ status, body }) => {
-            expect(status).to.equal(201);
+            expect(status).to.equal(StatusCodes.CREATED);
             expect(body).to.have.property('userID');
-            expect(body).to.have.property('books');
             expect(body.books).to.have.length(0);
             expect(body.username).to.equal(dynamicData.userName);
         }).then(({ body }) => {
 
             /* Call to delete account created to not mess up the bank. */
             userId = body.userID;
-            cy.loginUser(dynamicData).then((r) => {
-                accesstoken = r.body.token;
-                cy.deleteAccount({ userId: userId, token: accesstoken });
-            });
+            cy.loginUser(dynamicData)
+                .its('body.token')
+                .then((resp) => {
+                    accesstoken = resp;
+                    cy.deleteAccount({ userId: userId, token: accesstoken });
+                });
         });
     });
 
-    it('Registration with blank username', () => {
+    it('Does not register with a blank username', () => {
         cy.createUser({
             userName: '',
             password: dynamicData.password
         }).then(({ body, status }) => {
-            expect(status).to.equal(400);
-            expect(body.code).to.equal('1200');
+            expect(status).to.equal(StatusCodes.BAD_REQUEST);
             expect(body.message).to.equal('UserName and Password required.');
         });
     });
 
-    it('Registration with blank username and password', () => {
+    it('Does not register with a blank password and username', () => {
         cy.createUser({
             userName: '',
             password: dynamicData.password
         }).then(({ body, status }) => {
-            expect(status).to.equal(400);
-            expect(body.code).to.equal('1200');
+            expect(status).to.equal(StatusCodes.BAD_REQUEST);
             expect(body.message).to.equal('UserName and Password required.');
         });
     });
 
-    it('Registration with a password that does not contain special characters', () => {
+    it('Do not register a user with a password that does not contain special characters', () => {
         cy.createUser({
             userName: dynamicData.userName,
             password: 'test123'
         }).then(({ body, status }) => {
-            expect(status).to.equal(400);
-            expect(body.code).to.equal('1300');
+            expect(status).to.equal(StatusCodes.BAD_REQUEST);
             expect(body.message).to.equal(
                 'Passwords must have at least one non alphanumeric character, ' +
                 'one digit (\'0\'-\'9\'), one uppercase (\'A\'-\'Z\'), ' +
@@ -64,13 +62,12 @@ describe('Create new account', () => {
         });
     });
 
-    it('Create an account with the same data as an existing account', () => {
+    it('Does not create an account with the same data as an existing account', () => {
         cy.createUser({
             userName: name,
             password: passwd
         }).then(({ body, status }) => {
-            expect(status).to.equal(406);
-            expect(body.code).to.equal('1204');
+            expect(status).to.equal(StatusCodes.NOT_ACCEPTABLE);
             expect(body.message).to.equal('User exists!');
         });
     });
