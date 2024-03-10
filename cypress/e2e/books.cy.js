@@ -19,11 +19,10 @@ describe('Books', () => {
     });
 
     context('When authenticated', () => {
-        before(() => {
+        before(() =>
             cy.loginUser(userAuth)
                 .its('body.token')
                 .then((resp) => { token = resp; });
-        });
 
         it('Add and Remove a book from the favorites list', () => {
             cy.get('@getBookList')
