@@ -15,7 +15,7 @@ Make sure you have the following tools installed on your machine:
 1. Clone this repository to your local machine:
 
   ```
-  git clone https://github.com/juliosantosjob/BookStore-Tests-Functionals-Backend.git 
+  git clone https://github.com/juliosantosjob/Cypress-Tests-Functionals-Backend.git 
   ```
 
 2. Install project dependencies:
@@ -67,7 +67,7 @@ To run the tests, use the following command:
 
 ## Last Execution Report
 You can access the report of the last execution 
-<a href="https://juliosantosjob.github.io/BookStore-Tests-Functionals-Backend/">here</a>.
+<a href="https://juliosantosjob.github.io/Cypress-Tests-Functionals-Backend/">here</a>.
 
 
 ## Observation
