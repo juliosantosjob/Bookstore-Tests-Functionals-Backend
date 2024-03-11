@@ -1,4 +1,4 @@
-# BookStore-Tests-Functionals-Backend
+# Cypress-Tests-Functionals-Backend
 
 This is the backend of the BookStore project, intended for functional testing. It provides the necessary functionality to test the features of the BookStore application.
 
