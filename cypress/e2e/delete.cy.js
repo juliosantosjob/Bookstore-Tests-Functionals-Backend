@@ -1,4 +1,4 @@
-import { dynamicData } from '../support/randomData';
+import { dynamicData } from '../payloads/login';
 import { StatusCodes } from 'http-status-codes';
 
 describe('Finalize account', () => {
