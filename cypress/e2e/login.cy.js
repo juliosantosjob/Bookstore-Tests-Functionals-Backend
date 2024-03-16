@@ -2,10 +2,9 @@ import { userAuth } from '../payloads/login';
 import { StatusCodes } from 'http-status-codes';
 
 describe('Authorization', () => {
-    const { NAME, PASSWORD } = Cypress.env();
-    const name = NAME,
-        passwd = PASSWORD;
-
+    const name = Cypress.env('NAME');
+    const passwd = Cypress.env('PASSWORD');
+    
     it('Log in successfully', () => {
         cy.loginUser(userAuth).then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.OK);
