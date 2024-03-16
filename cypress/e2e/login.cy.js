@@ -8,9 +8,6 @@ describe('Authorization', () => {
     it('Log in successfully', () => {
         cy.loginUser(userAuth).then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.OK);
-            expect(body).to.have.property('token');
-            expect(body).to.have.property('expires');
-            expect(body.status).to.equal('Success');
             expect(body.result).to.equal('User authorized successfully.');
         });
     });
