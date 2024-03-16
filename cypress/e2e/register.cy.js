@@ -2,11 +2,9 @@ import { dynamicData } from '../payloads/login';
 import { StatusCodes } from 'http-status-codes';
 
 describe('User registration', () => {
-    let userId, accesstoken;
-    const { NAME, PASSWORD } = Cypress.env();
-    
-    const name = NAME,
-        passwd = PASSWORD;
+    const name = Cypress.env('NAME');
+    const passwd = Cypress.env('PASSWORD');
+    let userId, token;
 
     it('Must register a new user', () => {
         cy.createUser(dynamicData).then(({ status, body }) => {
@@ -21,8 +19,8 @@ describe('User registration', () => {
             cy.loginUser(dynamicData)
                 .its('body.token')
                 .then((resp) => {
-                    accesstoken = resp;
-                    cy.deleteAccount({ userId: userId, token: accesstoken });
+                    token = resp;
+                    cy.deleteAccount({ userId: userId, token: token });
                 });
         });
     });
