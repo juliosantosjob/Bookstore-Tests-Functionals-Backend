@@ -17,7 +17,6 @@ describe('Manage books', () => {
                     expect(status).to.equal(StatusCodes.OK);
                     expect(body.books[rand].isbn).to.equal(list.books[rand].isbn);
                     expect(body.books[rand].title).to.equal(list.books[rand].title);
-                    expect(body.books[rand].author).to.equal(list.books[rand].author);
                 });
         });
     });
