@@ -6,10 +6,11 @@ describe('Authorization', () => {
     const passwd = Cypress.env('PASSWORD');
     
     it('Log in successfully', () => {
-        cy.loginUser(userAuth).then(({ status, body }) => {
-            expect(status).to.equal(StatusCodes.OK);
-            expect(body.result).to.equal('User authorized successfully.');
-        });
+        cy.loginUser(userAuth)
+            .then(({ status, body }) => {
+                expect(status).to.equal(StatusCodes.OK);
+                expect(body.result).to.equal('User authorized successfully.');
+            });
     });
 
     it('Can\'t login with invalid username', () => {
