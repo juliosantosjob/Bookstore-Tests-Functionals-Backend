@@ -2,12 +2,12 @@ import { faker } from '@faker-js/faker';
 const { NAME, PASSWORD } = Cypress.env();
 
 module.exports = {
-    userAuth: {
+    authUser: {
         userName: NAME,
         password: PASSWORD
     },
-    dynamicData: {
+    dynamicUser: {
         userName: faker.internet.userName().substring(5),
-        password: faker.internet.password().substring(7) + 'M@123',
+        password: faker.internet.password().substring(7) + 'M@123'
     }
 };

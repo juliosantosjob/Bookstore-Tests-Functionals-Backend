@@ -1,4 +1,4 @@
-import { dynamicData } from '../payloads/login';
+import { dynamicUser } from '../payloads/login';
 import { StatusCodes } from 'http-status-codes';
 
 describe('User registration', () => {
@@ -7,16 +7,16 @@ describe('User registration', () => {
     let userId, token;
 
     it('Must register a new user', () => {
-        cy.createUser(dynamicData).then(({ status, body }) => {
+        cy.createUser(dynamicUser).then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.CREATED);
             expect(body).to.have.property('userID');
             expect(body.books).to.have.length(0);
-            expect(body.username).to.equal(dynamicData.userName);
+            expect(body.username).to.equal(dynamicUser.userName);
         }).then(({ body }) => {
 
             /* Call to delete account created to not mess up the bank. */
             userId = body.userID;
-            cy.loginUser(dynamicData)
+            cy.loginUser(dynamicUser)
                 .its('body.token')
                 .then((resp) => {
                     token = resp;
@@ -28,7 +28,7 @@ describe('User registration', () => {
     it('Does not register with a blank username', () => {
         cy.createUser({
             userName: '',
-            password: dynamicData.password
+            password: dynamicUser.password
         }).then(({ body, status }) => {
             expect(status).to.equal(StatusCodes.BAD_REQUEST);
             expect(body.message).to.equal('UserName and Password required.');
@@ -38,7 +38,7 @@ describe('User registration', () => {
     it('Does not register with a blank password and username', () => {
         cy.createUser({
             userName: '',
-            password: dynamicData.password
+            password: dynamicUser.password
         }).then(({ body, status }) => {
             expect(status).to.equal(StatusCodes.BAD_REQUEST);
             expect(body.message).to.equal('UserName and Password required.');
@@ -47,7 +47,7 @@ describe('User registration', () => {
 
     it('Do not register a user with a password that does not contain special characters', () => {
         cy.createUser({
-            userName: dynamicData.userName,
+            userName: dynamicUser.userName,
             password: 'test123'
         }).then(({ body, status }) => {
             expect(status).to.equal(StatusCodes.BAD_REQUEST);

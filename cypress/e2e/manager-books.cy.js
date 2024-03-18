@@ -1,10 +1,10 @@
-import { randomNumber } from '../support/randomData';
-import { userAuth } from '../payloads/login';
+import { rand } from '../support/randomData';
+import { authUser } from '../payloads/login';
 import { StatusCodes } from 'http-status-codes';
 
 describe('Manage books', () => {
-    let token, numberIsbn, userId = Cypress.env('USER_ID');
-    const rand = randomNumber();
+    let token, numberIsbn;
+    let userId = Cypress.env('USER_ID');
 
     beforeEach(() =>
         cy.getBookList()
@@ -12,18 +12,17 @@ describe('Manage books', () => {
 
     it('Check information of a book', () => {
         cy.fixture('listBooks').then((list) => {
-            cy.get('@getBookList')
-                .then(({ status, body }) => {
-                    expect(status).to.equal(StatusCodes.OK);
-                    expect(body.books[rand].isbn).to.equal(list.books[rand].isbn);
-                    expect(body.books[rand].title).to.equal(list.books[rand].title);
-                });
+            cy.get('@getBookList').then(({ status, body }) => {
+                expect(status).to.equal(StatusCodes.OK);
+                expect(body.books[rand].isbn).to.equal(list.books[rand].isbn);
+                expect(body.books[rand].title).to.equal(list.books[rand].title);
+            });
         });
     });
 
     context('When authenticated', () => {
         before(() =>
-            cy.loginUser(userAuth)
+            cy.loginUser(authUser)
                 .its('body.token')
                 .then(resp => token = resp));
 
