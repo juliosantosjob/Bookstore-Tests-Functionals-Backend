@@ -1,29 +1,29 @@
 Functionals requirements
 
-### New account registration ###
+### User registration ###
 
-New account registration - 201 - OK
-Create an account with blank userName - 400 - OK
-Create an account with blank username and password - 400
-Create an account with a password that does not contain special characters - 400
-Create an account with the same data as an existing account - 406
+- Must register a new user - 201 CREATED
+- Does not register with a blank username - 400 BAD REQUEST
+- Does not register with a blank password and username - 400 BAD REQUEST
+- Do not register a user with a password that does not contain special characters - 400 BAD REQUEST
+- Does not create an account with the same data as an existing account - 406 NOT ACCEPTABLE
 
-### Login ###
+### Authorization ###
 
-login successfully - 200
-Login with invalid username - 400
-Login with invalid password - 400
-Login with invalid username and password - 400
+- Log in successfully - 200 OK
+- Can't login with invalid username - 400 BAD REQUEST
+- Can't login with invalid password - 400 BAD REQUEST
+- Cannot log in with invalid username and password - 400 BAD REQUEST
 
-### Add books to favorites list ###
+### Manage books ###
 
-Access a list of available books - 200
-Add and remove a book from the favorites list - 200
-Add non-existent book - 400
-Added a book to my list without authorization - 401
-Added a book to my list with userid not correct - 401
+- Check information of a book - 200 OK
+- Add and remove a book from the favorites list - 200 OK
+- Don't add a book that doesn't exist - 400 BAD REQUEST
+- Do not add a book to the favorites list without authorization - 401 UNAUTHORIZED
+- Didn't add a book to the favorites list with an incorrect user ID - 401 UNAUTHORIZED
 
-### Delete account ###
+### Finalize account ###
 
-Delete user - 204
-Delet non-existent user - 400
+- Deletes a user - 204 NO CONTENT
+- Deletes a user that does not exist - 400 UNAUTHORIZED
