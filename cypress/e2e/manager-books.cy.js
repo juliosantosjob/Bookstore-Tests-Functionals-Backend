@@ -1,5 +1,5 @@
 import { rand } from '../support/randomData';
-import { authUser } from '../payloads/login';
+import { authUser } from '../payloads/users';
 import { StatusCodes } from 'http-status-codes';
 
 describe('Manage books', () => {
