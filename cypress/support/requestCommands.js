@@ -1,3 +1,12 @@
+Cypress.Commands.add('getProfile', (userId, token) => {
+    cy.api({
+        method: 'GET',
+        url: `/Account/v1/User/${userId}`,
+        failOnStatusCode: false,
+        headers: { Authorization: `Bearer ${token}` }
+    });
+});
+
 Cypress.Commands.add('createUser', ({ userName, password }) => {
     cy.api({
         method: 'POST',
@@ -5,15 +14,6 @@ Cypress.Commands.add('createUser', ({ userName, password }) => {
         headers: { 'Content-Type': 'application/json ' },
         failOnStatusCode: false,
         body: { userName: userName, password: password }
-    });
-});
-
-Cypress.Commands.add('getProfile', (userId, token) => {
-    cy.api({
-        method: 'GET',
-        url: `/Account/v1/User/${userId}`,
-        failOnStatusCode: false,
-        headers: { Authorization: `Bearer ${token}` }
     });
 });
 
