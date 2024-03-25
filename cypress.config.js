@@ -1,5 +1,5 @@
 const { defineConfig } = require('cypress');
-const { allureCypress } = require("allure-cypress/reporter");
+const { allureCypress } = require('allure-cypress/reporter');
 
 require('dotenv').config();
 
