@@ -26,4 +26,5 @@ Functionals requirements
 ### Finalize account ###
 
 - Deletes a user - 204 NO CONTENT
-- Deletes a user that does not exist - 400 UNAUTHORIZED
+- Deletes a user that does not exist - 400 BAD REQUEST
+- Deletes a user without authorization - 401 UNAUTHORIZED

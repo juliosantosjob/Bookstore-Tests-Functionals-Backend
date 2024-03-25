@@ -1,4 +1,6 @@
 const { defineConfig } = require('cypress');
+const { allureCypress } = require("allure-cypress/reporter");
+
 require('dotenv').config();
 
 module.exports = defineConfig({
@@ -9,10 +11,9 @@ module.exports = defineConfig({
             config.env.PASSWORD = process.env.PASSWORD;
             config.env.USER_ID = process.env.USER_ID,
 
-            require('cypress-mochawesome-reporter/plugin')(on);
+            allureCypress(on);
             return config;
         },
-        reporter: 'cypress-mochawesome-reporter',
         video: false,
         screenshotOnRunFailure: false
     }
