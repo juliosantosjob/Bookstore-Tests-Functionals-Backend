@@ -54,7 +54,7 @@ Cypress.Commands.add('removeBooks', (userId, token) => {
     });
 });
 
-Cypress.Commands.add('deleteAccount', ({ userId, token }) => {
+Cypress.Commands.add('deleteAccount', (userId, token ) => {
     cy.api({
         method: 'DELETE',
         url: `https://bookstore.toolsqa.com/Account/v1/User/${userId}`,

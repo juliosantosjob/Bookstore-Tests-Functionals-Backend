@@ -7,7 +7,7 @@ module.exports = {
         password: PASSWORD
     },
     dynamicUser: {
-        userName: faker.internet.userName().substring(5),
+        userName: faker.internet.userName(),
         password: faker.internet.password().substring(7) + 'M@123'
     }
 };

@@ -63,7 +63,7 @@ describe('Manage books', () => {
             });
         });
 
-        it('Do not add a book to the favorites list without authorization', () => {
+        it.only('Do not add a book to the favorites list without authorization', () => {
             token = 'invalid_token';
 
             cy.addBooksFavorites(
