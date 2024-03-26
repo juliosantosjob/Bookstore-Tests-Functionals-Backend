@@ -25,8 +25,6 @@ This is a backend testing automation project for the BookStore application, aimi
 | ❌     | Can't login with invalid password - 400 BAD REQUEST          |
 | ❌     | Cannot log in with invalid username and password - 400 BAD REQUEST |
 
-## Book Management
-
 ### Manage Books
 
 | Status | Description                                                  |
@@ -36,8 +34,6 @@ This is a backend testing automation project for the BookStore application, aimi
 | ❌     | Don't add a book that doesn't exist - 400 BAD REQUEST       |
 | ❌     | Do not add a book to the favorites list without authorization - 401 UNAUTHORIZED |
 | ❌     | Didn't add a book to the favorites list with an incorrect user ID - 401 UNAUTHORIZED |
-
-## Account Finalization
 
 ### Finalize Account
 
