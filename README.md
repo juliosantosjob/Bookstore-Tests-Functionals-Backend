@@ -2,7 +2,54 @@
 
 This is the backend of the BookStore project, intended for functional testing. It provides the necessary functionality to test the features of the BookStore application.
 
-## Prerequisites
+## Functional Requirements
+
+### User Registration
+
+| Status | Description                                                  |
+| ------ | ------------------------------------------------------------ |
+| ✅     | Must register a new user - 201 CREATED                       |
+| ❌     | Does not register with a blank username - 400 BAD REQUEST   |
+| ❌     | Does not register with a blank password and username - 400 BAD REQUEST |
+| ❌     | Do not register a user with a password that does not contain special characters - 400 BAD REQUEST |
+| ❌     | Does not create an account with the same data as an existing account - 406 NOT ACCEPTABLE |
+
+### Authorization
+
+| Status | Description                                                  |
+| ------ | ------------------------------------------------------------ |
+| ✅     | Log in successfully - 200 OK                                 |
+| ❌     | Can't login with invalid username - 400 BAD REQUEST          |
+| ❌     | Can't login with invalid password - 400 BAD REQUEST          |
+| ❌     | Cannot log in with invalid username and password - 400 BAD REQUEST |
+
+## Book Management
+
+### Manage Books
+
+| Status | Description                                                  |
+| ------ | ------------------------------------------------------------ |
+| ✅     | Check information of a book - 200 OK                        |
+| ❌     | Add and remove a book from the favorites list - 200 OK      |
+| ❌     | Don't add a book that doesn't exist - 400 BAD REQUEST       |
+| ❌     | Do not add a book to the favorites list without authorization - 401 UNAUTHORIZED |
+| ❌     | Didn't add a book to the favorites list with an incorrect user ID - 401 UNAUTHORIZED |
+
+## Account Finalization
+
+### Finalize Account
+
+| Status | Description                                                  |
+| ------ | ------------------------------------------------------------ |
+| ✅     | Deletes a user - 204 NO CONTENT                              |
+| ❌     | Deletes a user that does not exist - 400 BAD REQUEST         |
+| ❌     | Deletes a user without authorization - 401 UNAUTHORIZED      |
+
+<br>
+
+# How to Execute the Project
+
+### Prerequisites
 
 Make sure you have the following tools installed on your machine:
 

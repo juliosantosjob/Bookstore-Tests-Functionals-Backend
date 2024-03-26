@@ -7,8 +7,7 @@ describe('Finalize account', () => {
     beforeEach(() => {
         cy.createUser(dynamicUser).then(({ body }) => {
             userId = body.userID;
-            return cy.loginUser(dynamicUser);
-        }).then(({ body }) => {
+            cy.loginUser(dynamicUser); }).then(({ body }) => {
             token = body.token;
         });
     });
