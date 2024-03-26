@@ -1,6 +1,8 @@
 # Cypress-Tests-Functionals-Backend
 
-This is the backend of the BookStore project, intended for functional testing. It provides the necessary functionality to test the features of the BookStore application.
+## Description
+
+This is a backend testing automation project for the BookStore application, aiming to ensure that all critical parts of the application function correctly in different scenarios. It covers everything from user registration to book management. The idea is to create automated tests that verify if the system behaves as it should.
 
 ## Functional Requirements
 
@@ -23,8 +25,6 @@ This is the backend of the BookStore project, intended for functional testing. I
 | ❌     | Can't login with invalid password - 400 BAD REQUEST          |
 | ❌     | Cannot log in with invalid username and password - 400 BAD REQUEST |
 
-## Book Management
-
 ### Manage Books
 
 | Status | Description                                                  |
@@ -34,8 +34,6 @@ This is the backend of the BookStore project, intended for functional testing. I
 | ❌     | Don't add a book that doesn't exist - 400 BAD REQUEST       |
 | ❌     | Do not add a book to the favorites list without authorization - 401 UNAUTHORIZED |
 | ❌     | Didn't add a book to the favorites list with an incorrect user ID - 401 UNAUTHORIZED |
-
-## Account Finalization
 
 ### Finalize Account
 
