@@ -39,11 +39,11 @@ This is the backend of the BookStore project, intended for functional testing. I
 
 ### Finalize Account
 
-| Status | Description                                                  |
-| ------ | ------------------------------------------------------------ |
-| ✅     | Deletes a user - 204 NO CONTENT                              |
-| ❌     | Deletes a user that does not exist - 400 BAD REQUEST         |
-| ❌     | Deletes a user without authorization - 401 UNAUTHORIZED      |
+| Status | Description                                                   |
+| ------ | ------------------------------------------------------------- |
+| ✅     | Deletes a user - 204 NO CONTENT                               |
+| ❌     | Does not delete a user that does not exist - 400 BAD REQUEST  |
+| ❌     | Do not delete a user without authorization - 401 UNAUTHORIZED |
 
 <br>
 
@@ -53,9 +53,9 @@ This is the backend of the BookStore project, intended for functional testing. I
 
 Make sure you have the following tools installed on your machine:
 
-- Node.js: [Download and install the latest version of Node.js](https://nodejs.org/)
+- NodeJS: [Download and install the latest version of Node.js.](https://nodejs.org/)
 - npm: Usually installed automatically with Node.js, but you can check by typing `npm -v` in the terminal.
-- Git: to download the project
+- Git: to download the project.
 
 ## Configuration
 

@@ -21,14 +21,14 @@ describe('Finalize account', () => {
 
     afterEach(() => cy.deleteAccount(userId, token)); // Delete each account created to avoid filling the database.
 
-    it('Deletes a user without authorization', () => {
+    it('Do not delete a user without authorization', () => {
         token = 'invalid_token';
 
         cy.deleteAccount(userId, token).then(({ status }) =>
             expect(status).to.equal(StatusCodes.UNAUTHORIZED));
     });
 
-    it('Deletes a user that does not exist', () => {
+    it('Does not delete a user that does not exist', () => {
         userId = 'invalid_userId';
 
         cy.deleteAccount(userId, token).then(({ status, body }) => {
