@@ -116,9 +116,8 @@ To run the tests, use the following command:
 You can access the report of the last execution 
 <a href="https://juliosantosjob.github.io/Cypress-Tests-Functionals-Backend/">here</a>.
 
-
-## Observation
-This project is based on the requirements listed in the "requirements.txt" file located in the project's root directory. 
+## Swagger application
+- <a href ="https://bookstore.toolsqa.com/swagger/">Book Store API</a>
 
 ## Contact
 
