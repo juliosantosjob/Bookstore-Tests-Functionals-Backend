@@ -3,5 +3,4 @@ allure-results
 allure-report
 cypress/videos
 cypress/downloads
-screenshots
 .env

@@ -1,7 +1,6 @@
+require('dotenv').config();
 const { defineConfig } = require('cypress');
 const { allureCypress } = require('allure-cypress/reporter');
-
-require('dotenv').config();
 
 module.exports = defineConfig({
     e2e: {

@@ -3,10 +3,13 @@ import { authUser } from '../payloads/users';
 import { StatusCodes } from 'http-status-codes';
 
 describe('Manage books', () => {
-    let token, numberIsbn;
+    let token, numberIsbn, authorizedUser;
     let userId = Cypress.env('USER_ID');
 
-    beforeEach(() => cy.getBookList().as('getBookList'));
+    beforeEach(() => {
+        authorizedUser = authUser();
+        cy.getBookList().as('getBookList');
+    });
 
     it('Check information of a book', () => {
         cy.fixture('listBooks').then((list) => {
@@ -20,7 +23,7 @@ describe('Manage books', () => {
 
     context('When authenticated', () => {
         before(() =>
-            cy.loginUser(authUser)
+            cy.loginUser(authorizedUser)
                 .its('body.token')
                 .then(resp => token = resp));
 

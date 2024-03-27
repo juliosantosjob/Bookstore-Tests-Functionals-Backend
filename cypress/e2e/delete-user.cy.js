@@ -2,14 +2,13 @@ import { dynamicUser } from '../payloads/users';
 import { StatusCodes } from 'http-status-codes';
 
 describe('Finalize account', () => {
-    let userId, token;
+    let userId, token, randomUser;
 
     beforeEach(() => {
-        cy.createUser(dynamicUser).then(({ body }) => {
-            userId = body.userID;
-            cy.loginUser(dynamicUser); }).then(({ body }) => {
-            token = body.token;
-        });
+        randomUser = dynamicUser();
+        cy.createUser(randomUser).then(({ body }) => userId = body.userID);
+        cy.loginUser(randomUser).then(({ body }) => token = body.token);
+        
     });
 
     it('Deletes a user', () => {
@@ -24,8 +23,9 @@ describe('Finalize account', () => {
     it('Do not delete a user without authorization', () => {
         token = 'invalid_token';
 
-        cy.deleteAccount(userId, token).then(({ status }) =>
-            expect(status).to.equal(StatusCodes.UNAUTHORIZED));
+        cy.deleteAccount(userId, token).then(({ status }) => {
+            expect(status).to.equal(StatusCodes.UNAUTHORIZED);
+        }); 
     });
 
     it('Does not delete a user that does not exist', () => {
