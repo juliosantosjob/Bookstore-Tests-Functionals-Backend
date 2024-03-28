@@ -8,7 +8,6 @@ describe('Finalize account', () => {
         randomUser = dynamicUser();
         cy.createUser(randomUser).then(({ body }) => userId = body.userID);
         cy.loginUser(randomUser).then(({ body }) => token = body.token);
-        
     });
 
     it('Deletes a user', () => {
