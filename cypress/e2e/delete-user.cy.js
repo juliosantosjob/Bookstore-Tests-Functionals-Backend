@@ -22,8 +22,9 @@ describe('Finalize account', () => {
     it('Do not delete a user without authorization', () => {
         token = 'invalid_token';
 
-        cy.deleteAccount(userId, token).then(({ status }) => {
+        cy.deleteAccount(userId, token).then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.UNAUTHORIZED);
+            expect(body).to.be.null;
         }); 
     });
 
