@@ -7,7 +7,7 @@ describe('Finalize account', () => {
     beforeEach(() => {
         randomUser = dynamicUser();
         cy.createUser(randomUser).then(({ body }) => userId = body.userID);
-        cy.loginUser(randomUser).then(({ body }) => token = body.token);
+        cy.login(randomUser).then(({ body }) => token = body.token);
     });
 
     it('Deletes a user', () => {

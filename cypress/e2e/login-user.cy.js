@@ -7,7 +7,7 @@ describe('Authorization', () => {
     beforeEach(() => authorizedUser = authUser());
 
     it('Log in successfully', () => {
-        cy.loginUser(authorizedUser).then(({ status, body }) => {
+        cy.login(authorizedUser).then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.OK);
             expect(body.status).to.equal('Success');
             expect(body.result).to.equal('User authorized successfully.');
@@ -17,7 +17,7 @@ describe('Authorization', () => {
     it('Can\'t login with invalid username', () => {
         authorizedUser.userName = 'Invalid-name';
 
-        cy.loginUser(authorizedUser).then(({ body }) => {
+        cy.login(authorizedUser).then(({ body }) => {
             expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
         });
@@ -26,7 +26,7 @@ describe('Authorization', () => {
     it('Can\'t login with invalid password', () => {
         authorizedUser.password = 'Invalid-password';
 
-        cy.loginUser(authorizedUser).then(({ body }) => {
+        cy.login(authorizedUser).then(({ body }) => {
             expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
         });
@@ -36,7 +36,7 @@ describe('Authorization', () => {
         authorizedUser.userName = 'Invalid-name';
         authorizedUser.password = 'Invalid-password';
 
-        cy.loginUser(authorizedUser).then(({ body }) => {
+        cy.login(authorizedUser).then(({ body }) => {
             expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
         });

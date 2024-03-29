@@ -17,7 +17,7 @@ describe('User registration', () => {
             expect(body.username).to.equal(randomUser.userName);
             userId = body.userID;
     
-            cy.loginUser(randomUser)
+            cy.login(randomUser)
                 .its('body.token')
                 .then((resp) => {
                     token = resp; // Chamada para excluir a conta criada para não bagunçar o banco de dados.

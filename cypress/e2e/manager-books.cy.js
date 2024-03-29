@@ -23,7 +23,7 @@ describe('Manage books', () => {
 
     context('When authenticated', () => {
         before(() =>
-            cy.loginUser(authorizedUser)
+            cy.login(authorizedUser)
                 .its('body.token')
                 .then(resp => token = resp));
 
