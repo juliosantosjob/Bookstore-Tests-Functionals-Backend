@@ -1,15 +1,13 @@
-import { rand } from '../support/randomData';
+import { rand } from '../support/dynamics';
 import { authUser } from '../payloads/users';
 import { StatusCodes } from 'http-status-codes';
 
 describe('Manage books', () => {
-    let token, numberIsbn, authorizedUser;
-    let userId = Cypress.env('USER_ID');
+    let token, numberIsbn, userId = Cypress.env('USER_ID');
 
-    beforeEach(() => {
-        authorizedUser = authUser();
-        cy.getBookList().as('getBookList');
-    });
+    beforeEach(() =>
+        cy.getBookList()
+            .as('getBookList'));
 
     it('Check information of a book', () => {
         cy.fixture('listBooks').then((list) => {
@@ -23,7 +21,7 @@ describe('Manage books', () => {
 
     context('When authenticated', () => {
         before(() =>
-            cy.login(authorizedUser)
+            cy.loginUser(authUser)
                 .its('body.token')
                 .then(resp => token = resp));
 

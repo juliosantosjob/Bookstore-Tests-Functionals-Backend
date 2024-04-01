@@ -2,12 +2,13 @@ import { dynamicUser } from '../payloads/users';
 import { StatusCodes } from 'http-status-codes';
 
 describe('Finalize account', () => {
-    let userId, token, randomUser;
+    let userId, token;
 
     beforeEach(() => {
-        randomUser = dynamicUser();
-        cy.createUser(randomUser).then(({ body }) => userId = body.userID);
-        cy.login(randomUser).then(({ body }) => token = body.token);
+        cy.createUser(dynamicUser)
+            .then(({ body }) => userId = body.userID);
+        cy.loginUser(dynamicUser)
+            .then(({ body }) => token = body.token);
     });
 
     it('Deletes a user', () => {

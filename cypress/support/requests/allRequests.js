@@ -17,7 +17,7 @@ Cypress.Commands.add('createUser', ({ userName, password }) => {
     });
 });
 
-Cypress.Commands.add('login', ({ userName, password }) => {
+Cypress.Commands.add('loginUser', ({ userName, password }) => {
     cy.api({
         method: 'POST',
         url: '/Account/v1/GenerateToken',
