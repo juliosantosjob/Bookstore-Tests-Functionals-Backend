@@ -1,14 +1,17 @@
-import { dynamicUser } from '../payloads/users';
+import { dynamicUser } from '../../payloads/users.payload';
 import { StatusCodes } from 'http-status-codes';
+import { deleteUserSchema } from '../../schemas/delete-user.schema';
+chai.use(require('chai-json-schema'));
 
 describe('Finalize account', () => {
     let userId, token;
 
     beforeEach(() => {
-        cy.createUser(dynamicUser)
-            .then(({ body }) => userId = body.userID);
-        cy.loginUser(dynamicUser)
-            .then(({ body }) => token = body.token);
+        cy.createUser(dynamicUser).then(({ body }) => {
+            userId = body.userID;
+            cy.loginUser(dynamicUser).then(({ body }) =>  
+                token = body.token);
+        });
     });
 
     it('Deletes a user', () => {
@@ -18,22 +21,23 @@ describe('Finalize account', () => {
         });
     });
 
-    afterEach(() => cy.deleteAccount(userId, token)); // Delete each account created to avoid filling the database.
+    afterEach(() => cy.deleteAccount(userId, token));
 
     it('Do not delete a user without authorization', () => {
         token = 'invalid_token';
 
         cy.deleteAccount(userId, token).then(({ status }) => {
             expect(status).to.equal(StatusCodes.UNAUTHORIZED);
-        }); 
+        });
     });
 
     it('Does not delete a user that does not exist', () => {
         userId = 'invalid_userId';
 
-        cy.deleteAccount(userId, token).then(({ status, body }) => {
+        cy.deleteAccount('invalid_userId', token).then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.OK);
             expect(body.message).to.equal('User Id not correct!');
+            expect(body).to.be.jsonSchema(deleteUserSchema);
         });
     });
 });

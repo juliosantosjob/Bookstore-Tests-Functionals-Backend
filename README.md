@@ -18,12 +18,16 @@ This is a backend testing automation project for the BookStore application, aimi
 
 ### Authorization
 
-| Status | Description                                                  |
-| ------ | ------------------------------------------------------------ |
-| ✅     | Log in successfully - 200 OK                                 |
-| ❌     | Can't login with invalid username - 400 BAD REQUEST          |
-| ❌     | Can't login with invalid password - 400 BAD REQUEST          |
-| ❌     | Cannot log in with invalid username and password - 400 BAD REQUEST |
+| Status | Description                                                        |
+| ------ | -------------------------------------------------------------------|
+| ✅     | Log in successfully - 200 OK                                       |
+| ❌     | Cannot login with invalid username - 400 BAD REQUEST               |
+| ❌     | Cannot login with invalid password - 400 BAD REQUEST               |
+| ❌     | Cannot login with invalid username and password - 400 BAD REQUEST  |
+| ❌     | Cannot login with empty username - 400 BAD REQUEST                 |
+| ❌     | Cannot login with empty password - 400 BAD REQUEST                 |
+| ❌     | Cannot login with empty username and password - 400 BAD REQUEST    |
+
 
 ### Manage Books
 

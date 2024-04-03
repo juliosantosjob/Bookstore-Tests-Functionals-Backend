@@ -1,27 +1,31 @@
-import { dynamicUser, authUser } from '../payloads/users';
+import { dynamicUser, authUser } from '../../payloads/users';
 import { StatusCodes } from 'http-status-codes';
+import { newRegisterSchema } from '../../schemas/register-user.schema';
+chai.use(require('chai-json-schema'));
 
 describe('User registration', () => {
-    let userId, token;
-
-    it('Deve registrar um novo usuário', () => {
+    it('Must register a new user', () => {
         cy.createUser(dynamicUser).then(({ status, body }) => {
+            const userId = body.userID;
+
             expect(status).to.equal(StatusCodes.CREATED);
             expect(body.userID).to.not.be.empty;
             expect(body.books).to.have.length(0);
             expect(body.username).to.equal(dynamicUser.userName);
-            userId = body.userID;
-    
+            expect(body).to.be.jsonSchema(newRegisterSchema);
+
+            /**
+             * Deletes the account created at the end of the 
+             * process to avoid filling the database.
+             */
+
             cy.loginUser(dynamicUser)
                 .its('body.token')
-                .then((response) => {
-                    token = response; // Call to delete the created account so as not to mess up the database.
-                    cy.deleteAccount({ userId, token }); 
-                });
+                .then((token) => cy.deleteAccount({ userId, token }));
         });
     });
 
-    it('Do not register a user with a password that does not contain special characters', () => {   
+    it('Do not register a user with a password that does not contain special characters', () => {
         dynamicUser.password = 'invalid_password';
 
         cy.createUser(dynamicUser).then(({ body, status }) => {
