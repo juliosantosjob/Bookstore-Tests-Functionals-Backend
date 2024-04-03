@@ -1,4 +1,4 @@
-import { dynamicUser, authUser } from '../../payloads/users';
+import { dynamicUser, authUser } from '../../payloads/users.payload';
 import { StatusCodes } from 'http-status-codes';
 import { newRegisterSchema } from '../../schemas/register-user.schema';
 chai.use(require('chai-json-schema'));
@@ -21,7 +21,7 @@ describe('User registration', () => {
 
             cy.loginUser(dynamicUser)
                 .its('body.token')
-                .then((token) => cy.deleteAccount({ userId, token }));
+                .then((token) => cy.deleteAccount(userId, token ));
         });
     });
 
