@@ -1,8 +1,8 @@
 {
   "name": "bookstore-tests-functionals-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Backend test automation representative using Cypress best practices such as: Cypress commands, fixtures and random data.",
+  "main": "cypress.config.js",
   "scripts": {
     "open": "npx cypress open",
     "test": "allure generate allure-results --clean && npx cypress run",
