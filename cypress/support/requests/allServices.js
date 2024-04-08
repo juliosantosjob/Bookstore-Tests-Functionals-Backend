@@ -1,19 +1,17 @@
+Cypress.Commands.add('getBookList', () => {
+    cy.api({
+        method: 'GET',
+        url: '/BookStore/v1/Books',
+        failOnStatusCode: false
+    });
+});
+
 Cypress.Commands.add('getProfile', (userId, token) => {
     cy.api({
         method: 'GET',
         url: `/Account/v1/User/${userId}`,
         failOnStatusCode: false,
         headers: { Authorization: `Bearer ${token}` }
-    });
-});
-
-Cypress.Commands.add('createUser', ({ userName, password }) => {
-    cy.api({
-        method: 'POST',
-        url: '/Account/v1/User',
-        headers: { 'Content-Type': 'application/json ' },
-        failOnStatusCode: false,
-        body: { userName: userName, password: password }
     });
 });
 
@@ -27,11 +25,13 @@ Cypress.Commands.add('loginUser', ({ userName, password }) => {
     });
 });
 
-Cypress.Commands.add('getBookList', () => {
+Cypress.Commands.add('createUser', ({ userName, password }) => {
     cy.api({
-        method: 'GET',
-        url: '/BookStore/v1/Books',
-        failOnStatusCode: false
+        method: 'POST',
+        url: '/Account/v1/User',
+        headers: { 'Content-Type': 'application/json ' },
+        failOnStatusCode: false,
+        body: { userName: userName, password: password }
     });
 });
 
