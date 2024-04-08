@@ -1,6 +1,9 @@
 import { dynamicUser, authUser } from '../../payloads/users.payload';
 import { StatusCodes } from 'http-status-codes';
-import { newRegisterSchema } from '../../schemas/register-user.schema';
+import {
+    newRegisterSchema,
+    invalidRegisterSchema
+} from '../../schemas/register-user.schema';
 chai.use(require('chai-json-schema'));
 
 describe('User registration', () => {
@@ -21,21 +24,22 @@ describe('User registration', () => {
 
             cy.loginUser(dynamicUser)
                 .its('body.token')
-                .then((token) => cy.deleteAccount(userId, token ));
+                .then((token) => cy.deleteAccount(userId, token));
         });
     });
 
     it('Do not register a user with a password that does not contain special characters', () => {
         dynamicUser.password = 'invalid_password';
+        const invalidChars =
+            'Passwords must have at least one non alphanumeric character, ' +
+            'one digit (\'0\'-\'9\'), one uppercase (\'A\'-\'Z\'), ' +
+            'one lowercase (\'a\'-\'z\'), one special character and ' +
+            'Password must be eight characters or longer.';
 
         cy.createUser(dynamicUser).then(({ body, status }) => {
             expect(status).to.equal(StatusCodes.BAD_REQUEST);
-            expect(body.message).to.equal(
-                'Passwords must have at least one non alphanumeric character, ' +
-                'one digit (\'0\'-\'9\'), one uppercase (\'A\'-\'Z\'), ' +
-                'one lowercase (\'a\'-\'z\'), one special character and ' +
-                'Password must be eight characters or longer.'
-            );
+            expect(body.message).to.equal(invalidChars);
+            expect(body).to.be.jsonSchema(invalidRegisterSchema);
         });
     });
 
@@ -45,6 +49,7 @@ describe('User registration', () => {
         cy.createUser(dynamicUser).then(({ body, status }) => {
             expect(status).to.equal(StatusCodes.BAD_REQUEST);
             expect(body.message).to.equal('UserName and Password required.');
+            expect(body).to.be.jsonSchema(invalidRegisterSchema);
         });
     });
 
@@ -55,6 +60,7 @@ describe('User registration', () => {
         cy.createUser(dynamicUser).then(({ body, status }) => {
             expect(status).to.equal(StatusCodes.BAD_REQUEST);
             expect(body.message).to.equal('UserName and Password required.');
+            expect(body).to.be.jsonSchema(invalidRegisterSchema);
         });
     });
 
@@ -62,6 +68,7 @@ describe('User registration', () => {
         cy.createUser(authUser).then(({ body, status }) => {
             expect(status).to.equal(StatusCodes.NOT_ACCEPTABLE);
             expect(body.message).to.equal('User exists!');
+            expect(body).to.be.jsonSchema(invalidRegisterSchema);
         });
     });
 });

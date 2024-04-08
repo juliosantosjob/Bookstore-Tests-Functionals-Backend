@@ -7,5 +7,13 @@ export default {
             username: { 'type': 'string' },
             books: { 'type': 'array', empty: true }
         }
+    },
+    invalidRegisterSchema: {
+        type: 'object',
+        required: ['code', 'message'],
+        properties: {
+            code: { type: 'string' },
+            message: { type: 'string' }
+        }
     }
 };

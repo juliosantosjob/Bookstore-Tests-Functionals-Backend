@@ -1,6 +1,11 @@
 import { rand } from '../../support/dynamics';
 import { authUser } from '../../payloads/users.payload';
 import { StatusCodes } from 'http-status-codes';
+import {
+    getBooksSchema,
+    addBooksSchema,
+    invalidAddBooksSchema
+} from '../../schemas/manager-books.schema';
 chai.use(require('chai-json-schema'));
 
 describe('Manage books', () => {
@@ -8,7 +13,9 @@ describe('Manage books', () => {
         numberIsbn,
         userId = Cypress.env('USER_ID');
 
-    beforeEach(() => cy.getBookList().as('getBookList'));
+    beforeEach(() => { 
+        cy.getBookList().as('getBookList');
+    });
 
     it('Check information of a book', () => {
         cy.fixture('listBooks').then((list) => {
@@ -16,6 +23,8 @@ describe('Manage books', () => {
                 expect(status).to.equal(StatusCodes.OK);
                 expect(body.books[rand].isbn).to.equal(list.books[rand].isbn);
                 expect(body.books[rand].title).to.equal(list.books[rand].title);
+                expect(body.books[rand].subTitle).to.equal(list.books[rand].subTitle);
+                expect(body.books[rand]).to.be.jsonSchema(getBooksSchema);
             });
         });
     });
@@ -40,6 +49,7 @@ describe('Manage books', () => {
                 }).then(({ status, body }) => {
                     expect(status).to.equal(StatusCodes.CREATED);
                     expect(body.books[0].isbn).to.equal(numberIsbn);
+                    expect(body).to.be.jsonSchema(addBooksSchema);
 
                     cy.removeBooks(userId, token).then(() => {
                         cy.getProfile(userId, token)
@@ -58,8 +68,10 @@ describe('Manage books', () => {
                 token,
                 numberIsbn
             ).then(({ status, body }) => {
+                console.log(body);
                 expect(status).to.equal(StatusCodes.BAD_REQUEST);
                 expect(body.message).to.equal('ISBN supplied is not available in Books Collection!');
+                expect(body).to.be.jsonSchema(invalidAddBooksSchema);
             });
         });
 
@@ -73,6 +85,7 @@ describe('Manage books', () => {
             ).then(({ status, body }) => {
                 expect(status).to.equal(StatusCodes.UNAUTHORIZED);
                 expect(body.message).to.equal('User not authorized!');
+                expect(body).to.be.jsonSchema(invalidAddBooksSchema);
             });
         });
 
@@ -86,6 +99,7 @@ describe('Manage books', () => {
             ).then(({ status, body }) => {
                 expect(status).to.equal(StatusCodes.UNAUTHORIZED);
                 expect(body.message).to.equal('User Id not correct!');
+                expect(body).to.be.jsonSchema(invalidAddBooksSchema);
             });
         });
     });

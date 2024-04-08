@@ -21,13 +21,17 @@ describe('Finalize account', () => {
         });
     });
 
-    afterEach(() => cy.deleteAccount(userId, token));
+    afterEach(() => { 
+        cy.deleteAccount(userId, token);
+    });
 
-    it('Do not delete a user without authorization', () => {
+    it.only('Do not delete a user without authorization', () => {
         token = 'invalid_token';
 
-        cy.deleteAccount(userId, token).then(({ status }) => {
+        cy.deleteAccount(userId, token).then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.UNAUTHORIZED);
+            expect(body.message).to.equal('User not authorized!');
+            expect(body).to.be.jsonSchema(deleteUserSchema);
         });
     });
 
