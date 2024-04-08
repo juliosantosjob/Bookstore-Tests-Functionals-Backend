@@ -38,7 +38,7 @@ describe('Finalize account', () => {
     it('Does not delete a user that does not exist', () => {
         userId = 'invalid_userId';
 
-        cy.deleteAccount('invalid_userId', token).then(({ status, body }) => {
+        cy.deleteAccount(userId, token).then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.OK);
             expect(body.message).to.equal('User Id not correct!');
             expect(body).to.be.jsonSchema(deleteUserSchema);

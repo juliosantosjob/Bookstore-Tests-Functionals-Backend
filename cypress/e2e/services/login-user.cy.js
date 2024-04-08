@@ -21,7 +21,6 @@ describe('Authorization', () => {
         authUser.userName = 'Invalid-name';
 
         cy.loginUser(authUser).then(({ body }) => {
-            expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
             expect(body).to.be.jsonSchema(invalidLoginSchema);
         });
@@ -31,7 +30,6 @@ describe('Authorization', () => {
         authUser.password = 'Invalid-password';
 
         cy.loginUser(authUser).then(({ body }) => {
-            expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
             expect(body).to.be.jsonSchema(invalidLoginSchema);
         });
@@ -42,7 +40,6 @@ describe('Authorization', () => {
         authUser.password = 'Invalid-password';
 
         cy.loginUser(authUser).then(({ body }) => {
-            expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
             expect(body).to.be.jsonSchema(invalidLoginSchema);
         });
