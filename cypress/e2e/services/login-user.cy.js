@@ -63,7 +63,7 @@ describe('Authorization', () => {
         });
     });
 
-    it('Cannot login with empty username and password', () => {
+    it('Cannot login with empty username and password', () => { 
         authUser.userName = '';
         authUser.password = '';
 

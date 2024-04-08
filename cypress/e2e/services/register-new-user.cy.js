@@ -24,7 +24,7 @@ describe('User registration', () => {
 
             cy.loginUser(dynamicUser)
                 .its('body.token')
-                .then((token) => cy.deleteAccount(userId, token));
+                .then((token) => cy.deleteAccount(token, userId));
         });
     });
 

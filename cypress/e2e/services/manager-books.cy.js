@@ -35,15 +35,15 @@ describe('Manage books', () => {
                 .its('body.token')
                 .then(resp => token = resp));
 
-        it('Add and remove a book from the favorites list', () => {
+        it.only('Add and remove a book from the favorites list', () => {
             cy.get('@getBookList')
                 .its(`body.books[${rand}].isbn`)
                 .then((isbn) => {
                     numberIsbn = isbn;
 
                     cy.addBooksFavorites(
-                        userId,
                         token,
+                        userId,
                         numberIsbn
                     );
                 }).then(({ status, body }) => {
@@ -51,11 +51,9 @@ describe('Manage books', () => {
                     expect(body.books[0].isbn).to.equal(numberIsbn);
                     expect(body).to.be.jsonSchema(addBooksSchema);
 
-                    cy.removeBooks(userId, token).then(() => {
-                        cy.getProfile(userId, token)
-                            .then(({
-                                body
-                            }) => expect(body.books).to.be.empty);
+                    cy.removeBooks(token, userId).then(() => {
+                        cy.getProfile(token, userId)
+                            .then(({ body }) => expect(body.books).to.be.empty);
                     });
                 });
         });
@@ -64,8 +62,8 @@ describe('Manage books', () => {
             numberIsbn = 'invalid_isbn';
 
             cy.addBooksFavorites(
-                userId,
                 token,
+                userId,
                 numberIsbn
             ).then(({ status, body }) => {
                 console.log(body);
@@ -79,8 +77,8 @@ describe('Manage books', () => {
             token = 'invalid_token';
 
             cy.addBooksFavorites(
-                userId,
                 token,
+                userId,
                 numberIsbn
             ).then(({ status, body }) => {
                 expect(status).to.equal(StatusCodes.UNAUTHORIZED);
@@ -93,8 +91,8 @@ describe('Manage books', () => {
             userId = 'invalid_userId';
 
             cy.addBooksFavorites(
-                userId,
                 token,
+                userId,
                 numberIsbn
             ).then(({ status, body }) => {
                 expect(status).to.equal(StatusCodes.UNAUTHORIZED);

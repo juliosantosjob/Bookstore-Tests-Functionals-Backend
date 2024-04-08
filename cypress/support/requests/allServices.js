@@ -6,7 +6,7 @@ Cypress.Commands.add('getBookList', () => {
     });
 });
 
-Cypress.Commands.add('getProfile', (userId, token) => {
+Cypress.Commands.add('getProfile', (token, userId) => {
     cy.api({
         method: 'GET',
         url: `/Account/v1/User/${userId}`,
@@ -35,7 +35,7 @@ Cypress.Commands.add('createUser', ({ userName, password }) => {
     });
 });
 
-Cypress.Commands.add('addBooksFavorites', (userId, token, numberIsbn) => {
+Cypress.Commands.add('addBooksFavorites', (token, userId, numberIsbn) => {
     cy.api({
         method: 'POST',
         url: '/BookStore/v1/Books',
@@ -45,7 +45,7 @@ Cypress.Commands.add('addBooksFavorites', (userId, token, numberIsbn) => {
     });
 });
 
-Cypress.Commands.add('removeBooks', (userId, token) => {
+Cypress.Commands.add('removeBooks', (token, userId) => {
     cy.api({
         method: 'DELETE',
         url: `/BookStore/v1/Books?UserId=${userId}`,
@@ -54,7 +54,7 @@ Cypress.Commands.add('removeBooks', (userId, token) => {
     });
 });
 
-Cypress.Commands.add('deleteAccount', (userId, token) => {
+Cypress.Commands.add('deleteAccount', (token, userId) => {
     cy.api({
         method: 'DELETE',
         url: `/Account/v1/User/${userId}`,
