@@ -26,7 +26,7 @@ describe('Finalize account', () => {
         cy.deleteAccount(userId, token);
     });
 
-    it.only('Do not delete a user without authorization', () => {
+    it('Do not delete a user without authorization', () => {
         token = 'invalid_token';
 
         cy.deleteAccount(userId, token).then(({ status, body }) => {
