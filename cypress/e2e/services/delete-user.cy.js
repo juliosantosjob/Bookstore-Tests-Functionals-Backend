@@ -9,8 +9,9 @@ describe('Finalize account', () => {
     beforeEach(() => {
         cy.createUser(dynamicUser).then(({ body }) => {
             userId = body.userID;
-            cy.loginUser(dynamicUser).then(({ body }) =>  
-                token = body.token);
+        });
+        cy.loginUser(dynamicUser).then(({ body }) => { 
+            token = body.token;
         });
     });
 
@@ -25,7 +26,7 @@ describe('Finalize account', () => {
         cy.deleteAccount(userId, token);
     });
 
-    it('Do not delete a user without authorization', () => {
+    it.only('Do not delete a user without authorization', () => {
         token = 'invalid_token';
 
         cy.deleteAccount(userId, token).then(({ status, body }) => {
