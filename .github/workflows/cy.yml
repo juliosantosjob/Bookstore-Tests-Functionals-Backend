@@ -19,8 +19,8 @@ jobs:
       - name: Verification with eslint
         run: npm run lint
 
-      - name: Clear cypress cache
-        run: npx cypress cache clear
+      # - name: Clear cypress cache
+      #   run: npx cypress cache clear
 
       - name: Run Cypress Tests 🧪
         uses: cypress-io/github-action@v5
