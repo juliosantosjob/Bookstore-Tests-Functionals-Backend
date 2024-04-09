@@ -13,7 +13,7 @@ describe('Manage books', () => {
         numberIsbn,
         userId = Cypress.env('USER_ID');
 
-    beforeEach(() => { 
+    beforeEach(() => {
         cy.getBookList().as('getBookList');
     });
 
@@ -24,9 +24,13 @@ describe('Manage books', () => {
                 expect(body.books[rand].isbn).to.equal(list.books[rand].isbn);
                 expect(body.books[rand].title).to.equal(list.books[rand].title);
                 expect(body.books[rand].subTitle).to.equal(list.books[rand].subTitle);
-                expect(body.books[rand]).to.be.jsonSchema(getBooksSchema);
             });
         });
+    });
+
+    it('Ensures the contract for book information', () => {
+        cy.get('@getBookList').then(({ body }) =>
+            expect(body.books[rand]).to.be.jsonSchema(getBooksSchema));
     });
 
     context('When authenticated', () => {
@@ -35,7 +39,7 @@ describe('Manage books', () => {
                 .its('body.token')
                 .then(resp => token = resp));
 
-        it.only('Add and remove a book from the favorites list', () => {
+        it('Add and remove a book from the favorites list', () => {
             cy.get('@getBookList')
                 .its(`body.books[${rand}].isbn`)
                 .then((isbn) => {
@@ -69,7 +73,6 @@ describe('Manage books', () => {
                 console.log(body);
                 expect(status).to.equal(StatusCodes.BAD_REQUEST);
                 expect(body.message).to.equal('ISBN supplied is not available in Books Collection!');
-                expect(body).to.be.jsonSchema(invalidAddBooksSchema);
             });
         });
 
@@ -83,7 +86,6 @@ describe('Manage books', () => {
             ).then(({ status, body }) => {
                 expect(status).to.equal(StatusCodes.UNAUTHORIZED);
                 expect(body.message).to.equal('User not authorized!');
-                expect(body).to.be.jsonSchema(invalidAddBooksSchema);
             });
         });
 
@@ -97,8 +99,19 @@ describe('Manage books', () => {
             ).then(({ status, body }) => {
                 expect(status).to.equal(StatusCodes.UNAUTHORIZED);
                 expect(body.message).to.equal('User Id not correct!');
-                expect(body).to.be.jsonSchema(invalidAddBooksSchema);
             });
+        });
+
+        it('Ensure the contract for calls to add books to favorites with invalid arguments', () => {
+            token = 'invalid_token';
+            userId = 'invalid_userId';
+            numberIsbn = 'invalid_isbn';
+
+            cy.addBooksFavorites(
+                token,
+                userId,
+                numberIsbn
+            ).then(({ body }) => expect(body).to.be.jsonSchema(invalidAddBooksSchema));
         });
     });
 });

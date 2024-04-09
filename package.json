@@ -7,10 +7,9 @@
     "allure:report": "allure generate allure-results --clean -o allure-report",
     "allure:history": "if exist allure-report/history move allure-report/history allure-results/history",
     "allure:clear": "rmdir /s /q allure-results && rmdir /s /q allure-report",
-    "open": "npx cypress open",
     "test": "allure generate allure-results --clean && npx cypress run",
+    "open": "npx cypress open",
     "lint": "npx eslint cypress"
-
   },
   "keywords": [],
   "author": "Julio Santos",

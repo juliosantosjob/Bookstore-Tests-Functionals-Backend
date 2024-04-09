@@ -13,44 +13,56 @@ describe('Authorization', () => {
             expect(status).to.equal(StatusCodes.OK);
             expect(body.status).to.equal('Success');
             expect(body.result).to.equal('User authorized successfully.');
-            expect(body).to.be.jsonSchema(loginUserSchema);
         });
     });
 
+    it('Ensures successful login contract', () => {
+        cy.loginUser(authUser).then(({ body }) => 
+            expect(body).to.be.jsonSchema(loginUserSchema));
+    });
+
     it('Cannot login with invalid username', () => {
-        authUser.userName = 'Invalid-name';
+        authUser.userName = 'Invalid_name';
 
         cy.loginUser(authUser).then(({ body }) => {
+            expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
-            expect(body).to.be.jsonSchema(invalidLoginSchema);
         });
     });
 
     it('Cannot login with invalid password', () => {
-        authUser.password = 'Invalid-password';
+        authUser.password = 'Invalid_password';
 
         cy.loginUser(authUser).then(({ body }) => {
+            expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
-            expect(body).to.be.jsonSchema(invalidLoginSchema);
         });
     });
 
     it('Cannot login with invalid username and password', () => {
-        authUser.userName = 'Invalid-name';
-        authUser.password = 'Invalid-password';
+        authUser.userName = 'Invalid_name';
+        authUser.password = 'Invalid_password';
 
         cy.loginUser(authUser).then(({ body }) => {
+            expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
-            expect(body).to.be.jsonSchema(invalidLoginSchema);
         });
+    });
+
+    it('Ensure the contract for login errors with invalid arguments', () => {
+        authUser.userName = 'Invalid_name';
+        authUser.password = 'Invalid_password';
+
+        cy.loginUser(authUser).then(({ body }) => 
+            expect(body).to.be.jsonSchema(invalidLoginSchema));
     });
 
     it('Cannot login with empty username', () => {
         authUser.userName = '';
 
         cy.loginUser(authUser).then(({ body }) => {
+            expect(body.code).to.equal('1200');
             expect(body.message).to.equal('UserName and Password required.');
-            expect(body).to.be.jsonSchema(emptyLoginSchema);
         });
     });
 
@@ -58,8 +70,8 @@ describe('Authorization', () => {
         authUser.password = '';
 
         cy.loginUser(authUser).then(({ body }) => {
+            expect(body.code).to.equal('1200');
             expect(body.message).to.equal('UserName and Password required.');
-            expect(body).to.be.jsonSchema(emptyLoginSchema);
         });
     });
 
@@ -68,8 +80,16 @@ describe('Authorization', () => {
         authUser.password = '';
 
         cy.loginUser(authUser).then(({ body }) => {
+            expect(body.code).to.equal('1200');
             expect(body.message).to.equal('UserName and Password required.');
-            expect(body).to.be.jsonSchema(emptyLoginSchema);
         });
+    });
+
+    it('Ensure the contract for login errors with empty arguments', () => {
+        authUser.userName = '';
+        authUser.password = '';
+
+        cy.loginUser(authUser).then(({ body }) => 
+            expect(body).to.be.jsonSchema(emptyLoginSchema));
     });
 });

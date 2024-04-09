@@ -9,7 +9,6 @@ describe('Finalize account', () => {
     beforeEach(() => {
         cy.createUser(dynamicUser).then(({ body }) => { 
             userId = body.userID;
-            
             cy.loginUser(dynamicUser).then(({ body }) => { 
                 token = body.token; 
             });
@@ -33,7 +32,6 @@ describe('Finalize account', () => {
         cy.deleteAccount(token, userId).then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.UNAUTHORIZED);
             expect(body.message).to.equal('User not authorized!');
-            expect(body).to.be.jsonSchema(deleteUserSchema);
         });
     });
 
@@ -43,7 +41,14 @@ describe('Finalize account', () => {
         cy.deleteAccount(token, userId).then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.OK);
             expect(body.message).to.equal('User Id not correct!');
-            expect(body).to.be.jsonSchema(deleteUserSchema);
         });
+    });
+
+    it('Ensure the contract for calls to delete user with invalid arguments', () => {
+        token = 'invalid_token';
+        userId = 'invalid_userId';
+
+        cy.deleteAccount(token, userId).then(({ body }) => 
+            expect(body).to.be.jsonSchema(deleteUserSchema));
     });
 });

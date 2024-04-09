@@ -6,40 +6,47 @@ import {
 } from '../../schemas/register-user.schema';
 chai.use(require('chai-json-schema'));
 
-describe('User registration', () => {
-    it('Must register a new user', () => {
-        cy.createUser(dynamicUser).then(({ status, body }) => {
-            const userId = body.userID;
+describe('User registration', function () {
+    beforeEach(() => {
+        cy.createUser(dynamicUser)
+            .as('createUser')
+            .then(({ body }) => this.userId = body.userID);
+    });
 
+    it('Must register a new user successfully', () => {
+        cy.get('@createUser').then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.CREATED);
             expect(body.userID).to.not.be.empty;
             expect(body.books).to.have.length(0);
             expect(body.username).to.equal(dynamicUser.userName);
-            expect(body).to.be.jsonSchema(newRegisterSchema);
+        });
 
-            /**
-             * Deletes the account created at the end of the 
-             * process to avoid filling the database.
-             */
+        cy.loginUser(dynamicUser)
+            .its('body.token')
+            .then((token) => cy.deleteAccount(token, this.userId));
+    });
+
+    it('Ensure the contract for successful account registration', () => {
+        cy.get('@createUser').then(({ body }) => {
+            expect(body).to.be.jsonSchema(newRegisterSchema);
 
             cy.loginUser(dynamicUser)
                 .its('body.token')
-                .then((token) => cy.deleteAccount(token, userId));
+                .then((token) => cy.deleteAccount(token, this.userId));
         });
     });
 
     it('Do not register a user with a password that does not contain special characters', () => {
         dynamicUser.password = 'invalid_password';
-        const invalidChars =
-            'Passwords must have at least one non alphanumeric character, ' +
-            'one digit (\'0\'-\'9\'), one uppercase (\'A\'-\'Z\'), ' +
-            'one lowercase (\'a\'-\'z\'), one special character and ' +
-            'Password must be eight characters or longer.';
 
         cy.createUser(dynamicUser).then(({ body, status }) => {
             expect(status).to.equal(StatusCodes.BAD_REQUEST);
-            expect(body.message).to.equal(invalidChars);
-            expect(body).to.be.jsonSchema(invalidRegisterSchema);
+            expect(body.message).to.equal(
+                'Passwords must have at least one non alphanumeric character, ' +
+                'one digit (\'0\'-\'9\'), one uppercase (\'A\'-\'Z\'), ' +
+                'one lowercase (\'a\'-\'z\'), one special character and ' +
+                'Password must be eight characters or longer.'
+            );
         });
     });
 
@@ -49,7 +56,6 @@ describe('User registration', () => {
         cy.createUser(dynamicUser).then(({ body, status }) => {
             expect(status).to.equal(StatusCodes.BAD_REQUEST);
             expect(body.message).to.equal('UserName and Password required.');
-            expect(body).to.be.jsonSchema(invalidRegisterSchema);
         });
     });
 
@@ -60,7 +66,6 @@ describe('User registration', () => {
         cy.createUser(dynamicUser).then(({ body, status }) => {
             expect(status).to.equal(StatusCodes.BAD_REQUEST);
             expect(body.message).to.equal('UserName and Password required.');
-            expect(body).to.be.jsonSchema(invalidRegisterSchema);
         });
     });
 
@@ -68,7 +73,14 @@ describe('User registration', () => {
         cy.createUser(authUser).then(({ body, status }) => {
             expect(status).to.equal(StatusCodes.NOT_ACCEPTABLE);
             expect(body.message).to.equal('User exists!');
-            expect(body).to.be.jsonSchema(invalidRegisterSchema);
         });
+    });
+
+    it('Ensure the contract for registration errors with invalid arguments', () => {
+        dynamicUser.userName = '';
+        dynamicUser.password = '';
+
+        cy.createUser(dynamicUser).then(({ body }) =>
+            expect(body).to.be.jsonSchema(invalidRegisterSchema));
     });
 });
