@@ -112,6 +112,6 @@ describe('Manage books', () => {
                 userId,
                 numberIsbn
             ).then(({ body }) => expect(body).to.be.jsonSchema(invalidAddBooksSchema));
-        });
+        }); 
     });
 });
