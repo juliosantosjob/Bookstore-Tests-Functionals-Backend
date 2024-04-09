@@ -70,7 +70,6 @@ describe('Manage books', () => {
                 userId,
                 numberIsbn
             ).then(({ status, body }) => {
-                console.log(body);
                 expect(status).to.equal(StatusCodes.BAD_REQUEST);
                 expect(body.message).to.equal('ISBN supplied is not available in Books Collection!');
             });
