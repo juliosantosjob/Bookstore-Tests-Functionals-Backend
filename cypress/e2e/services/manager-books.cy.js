@@ -35,7 +35,7 @@ describe('Manage books', () => {
                 .its('body.token')
                 .then(resp => token = resp));
 
-        it.only('Add and remove a book from the favorites list', () => {
+        it('Add and remove a book from the favorites list', () => {
             cy.get('@getBookList')
                 .its(`body.books[${rand}].isbn`)
                 .then((isbn) => {
