@@ -1,5 +1,5 @@
 import { rand } from '../../support/dynamics';
-import { authUser } from '../../payloads/users.payload';
+import { usersPayloads } from '../../payloads/users.payload';
 import { StatusCodes } from 'http-status-codes';
 import {
     getBooksSchema,
@@ -9,11 +9,13 @@ import {
 chai.use(require('chai-json-schema'));
 
 describe('Manage books', () => {
-    let token,
+    let authUser,
+        token,
         numberIsbn,
         userId = Cypress.env('USER_ID');
 
     beforeEach(() => {
+        authUser = usersPayloads().authUser;
         cy.getBookList().as('getBookList');
     });
 
@@ -111,6 +113,6 @@ describe('Manage books', () => {
                 userId,
                 numberIsbn
             ).then(({ body }) => expect(body).to.be.jsonSchema(invalidAddBooksSchema));
-        }); 
+        });
     });
 });

@@ -1,12 +1,16 @@
-import { dynamicUser } from '../../payloads/users.payload';
+import { usersPayloads } from '../../payloads/users.payload';
 import { StatusCodes } from 'http-status-codes';
 import { deleteUserSchema } from '../../schemas/delete-user.schema';
 chai.use(require('chai-json-schema'));
 
 describe('Finalize account', () => {
+    let authUser, dynamicUser;
     let userId, token;
 
     beforeEach(() => {
+        authUser = usersPayloads().authUser;
+        dynamicUser = usersPayloads().dynamicUser;
+
         cy.createUser(dynamicUser).then(({ body }) => { 
             userId = body.userID;
             cy.loginUser(dynamicUser).then(({ body }) => { 

@@ -1,4 +1,4 @@
-import { dynamicUser, authUser } from '../../payloads/users.payload';
+import { usersPayloads } from '../../payloads/users.payload';
 import { StatusCodes } from 'http-status-codes';
 import {
     newRegisterSchema,
@@ -7,7 +7,12 @@ import {
 chai.use(require('chai-json-schema'));
 
 describe('User registration', function () {
+    let authUser, dynamicUser;
+
     beforeEach(() => {
+        authUser = usersPayloads().authUser;
+        dynamicUser = usersPayloads().dynamicUser;
+
         cy.createUser(dynamicUser)
             .as('createUser')
             .then(({ body }) => this.userId = body.userID);

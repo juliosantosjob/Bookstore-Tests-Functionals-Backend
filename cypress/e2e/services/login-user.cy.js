@@ -1,4 +1,4 @@
-import { authUser } from '../../payloads/users.payload';
+import { usersPayloads } from '../../payloads/users.payload';
 import { StatusCodes } from 'http-status-codes';
 import {
     loginUserSchema,
@@ -8,6 +8,12 @@ import {
 chai.use(require('chai-json-schema'));
 
 describe('Authorization', () => {
+    let authUser;
+
+    beforeEach(() => {
+        authUser = usersPayloads().authUser;
+    });
+
     it('Log in successfully', () => {
         cy.loginUser(authUser).then(({ status, body }) => {
             expect(status).to.equal(StatusCodes.OK);
@@ -17,7 +23,7 @@ describe('Authorization', () => {
     });
 
     it('Ensures successful login contract', () => {
-        cy.loginUser(authUser).then(({ body }) => 
+        cy.loginUser(authUser).then(({ body }) =>
             expect(body).to.be.jsonSchema(loginUserSchema));
     });
 
@@ -53,7 +59,7 @@ describe('Authorization', () => {
         authUser.userName = 'Invalid_name';
         authUser.password = 'Invalid_password';
 
-        cy.loginUser(authUser).then(({ body }) => 
+        cy.loginUser(authUser).then(({ body }) =>
             expect(body).to.be.jsonSchema(invalidLoginSchema));
     });
 
@@ -75,7 +81,7 @@ describe('Authorization', () => {
         });
     });
 
-    it('Cannot login with empty username and password', () => { 
+    it('Cannot login with empty username and password', () => {
         authUser.userName = '';
         authUser.password = '';
 
@@ -89,7 +95,7 @@ describe('Authorization', () => {
         authUser.userName = '';
         authUser.password = '';
 
-        cy.loginUser(authUser).then(({ body }) => 
+        cy.loginUser(authUser).then(({ body }) =>
             expect(body).to.be.jsonSchema(emptyLoginSchema));
     });
 });
