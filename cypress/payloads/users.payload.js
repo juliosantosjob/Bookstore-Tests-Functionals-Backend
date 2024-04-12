@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 const { NAME, PASSWORD } = Cypress.env();
 
-
 export default {
     usersPayloads: function() {
         return {
@@ -10,10 +9,9 @@ export default {
                 password: PASSWORD
             },
             dynamicUser: {
-                userName: faker.internet.userName(),
+                userName: faker.internet.userName().substring(5),
                 password: faker.internet.password().substring(7) + 'M@123'
             }
         };
     }
 };
-

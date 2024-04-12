@@ -8,8 +8,8 @@
     "allure:history": "if exist allure-report/history move allure-report/history allure-results/history",
     "allure:clear": "rmdir /s /q allure-results && rmdir /s /q allure-report",
     "test": "allure generate allure-results --clean && npx cypress run",
-    "open": "npx cypress open",
-    "lint": "npx eslint cypress"
+    "open": "cypress open",
+    "lint": "eslint cypress"
   },
   "keywords": [],
   "author": "Julio Santos",
@@ -24,7 +24,6 @@
   "dependencies": {
     "chai-json-schema": "^1.5.1",
     "cypress-plugin-api": "^2.11.1",
-    "dotenv": "^16.3.1",
     "http-status-codes": "^2.3.0"
   }
 }

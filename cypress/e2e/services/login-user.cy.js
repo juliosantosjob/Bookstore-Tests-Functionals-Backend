@@ -10,9 +10,7 @@ chai.use(require('chai-json-schema'));
 describe('Authorization', () => {
     let authUser;
 
-    beforeEach(() => {
-        authUser = usersPayloads().authUser;
-    });
+    beforeEach(() => authUser = usersPayloads().authUser);
 
     it('Log in successfully', () => {
         cy.loginUser(authUser).then(({ status, body }) => {
