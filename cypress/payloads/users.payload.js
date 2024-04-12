@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 const { NAME, PASSWORD } = Cypress.env();
 
-
 export default {
     usersPayloads: function() {
         return {
@@ -16,4 +15,3 @@ export default {
         };
     }
 };
-
