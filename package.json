@@ -22,8 +22,6 @@
     "eslint-plugin-cypress": "^2.15.1"
   },
   "dependencies": {
-    "chai-json-schema": "^1.5.1",
-    "cypress-plugin-api": "^2.11.1",
-    "http-status-codes": "^2.3.0"
+    "cypress-plugin-api": "^2.11.1"
   }
 }

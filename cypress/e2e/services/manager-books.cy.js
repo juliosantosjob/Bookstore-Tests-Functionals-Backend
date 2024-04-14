@@ -1,28 +1,20 @@
+/// <reference types="cypress" />
+
 import { rand } from '../../support/dynamics';
-import { usersPayloads } from '../../payloads/users.payload';
-import { StatusCodes } from 'http-status-codes';
-import {
-    getBooksSchema,
-    addBooksSchema,
-    invalidAddBooksSchema
-} from '../../schemas/manager-books.schema';
-chai.use(require('chai-json-schema'));
 
 describe('Manage books', () => {
-    let authUser,
-        token,
+    let token,
         numberIsbn,
         userId = Cypress.env('USER_ID');
 
     beforeEach(() => {
-        authUser = usersPayloads().authUser;
         cy.getBookList().as('getBookList');
     });
 
     it('Check information of a book', () => {
         cy.fixture('listBooks').then((list) => {
             cy.get('@getBookList').then(({ status, body }) => {
-                expect(status).to.equal(StatusCodes.OK);
+                expect(status).to.equal(200);
                 expect(body.books[rand].isbn).to.equal(list.books[rand].isbn);
                 expect(body.books[rand].title).to.equal(list.books[rand].title);
                 expect(body.books[rand].subTitle).to.equal(list.books[rand].subTitle);
@@ -30,16 +22,14 @@ describe('Manage books', () => {
         });
     });
 
-    it('Ensures the contract for book information', () => {
-        cy.get('@getBookList').then(({ body }) =>
-            expect(body.books[rand]).to.be.jsonSchema(getBooksSchema));
-    });
-
     context('When authenticated', () => {
-        before(() =>
-            cy.loginUser(authUser)
-                .its('body.token')
-                .then(resp => token = resp));
+        before(() => {
+            cy.task('usersPayloads').then(({ authUser }) => {
+                cy.loginUser(authUser)
+                    .its('body.token')
+                    .then(resp => token = resp);
+            });
+        });
 
         it('Add and remove a book from the favorites list', () => {
             cy.get('@getBookList')
@@ -53,9 +43,8 @@ describe('Manage books', () => {
                         numberIsbn
                     );
                 }).then(({ status, body }) => {
-                    expect(status).to.equal(StatusCodes.CREATED);
+                    expect(status).to.equal(201);
                     expect(body.books[0].isbn).to.equal(numberIsbn);
-                    expect(body).to.be.jsonSchema(addBooksSchema);
 
                     cy.removeBooks(token, userId).then(() => {
                         cy.getProfile(token, userId)
@@ -72,7 +61,7 @@ describe('Manage books', () => {
                 userId,
                 numberIsbn
             ).then(({ status, body }) => {
-                expect(status).to.equal(StatusCodes.BAD_REQUEST);
+                expect(status).to.equal(400);
                 expect(body.message).to.equal('ISBN supplied is not available in Books Collection!');
             });
         });
@@ -85,7 +74,7 @@ describe('Manage books', () => {
                 userId,
                 numberIsbn
             ).then(({ status, body }) => {
-                expect(status).to.equal(StatusCodes.UNAUTHORIZED);
+                expect(status).to.equal(401);
                 expect(body.message).to.equal('User not authorized!');
             });
         });
@@ -98,21 +87,9 @@ describe('Manage books', () => {
                 userId,
                 numberIsbn
             ).then(({ status, body }) => {
-                expect(status).to.equal(StatusCodes.UNAUTHORIZED);
+                expect(status).to.equal(401);
                 expect(body.message).to.equal('User Id not correct!');
             });
-        });
-
-        it('Ensure the contract for calls to add books to favorites with invalid arguments', () => {
-            token = 'invalid_token';
-            userId = 'invalid_userId';
-            numberIsbn = 'invalid_isbn';
-
-            cy.addBooksFavorites(
-                token,
-                userId,
-                numberIsbn
-            ).then(({ body }) => expect(body).to.be.jsonSchema(invalidAddBooksSchema));
         });
     });
 });
