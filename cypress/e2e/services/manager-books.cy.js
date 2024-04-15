@@ -3,13 +3,9 @@
 import { rand } from '../../support/dynamics';
 
 describe('Manage books', () => {
-    let token,
-        numberIsbn,
-        userId = Cypress.env('USER_ID');
+    let token, numberIsbn, userId = Cypress.env('USER_ID');
 
-    beforeEach(() => {
-        cy.getBookList().as('getBookList');
-    });
+    beforeEach(() => cy.getBookList().as('getBookList'));
 
     it('Check information of a book', () => {
         cy.fixture('listBooks').then((list) => {

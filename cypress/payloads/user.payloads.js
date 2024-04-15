@@ -1,6 +1,6 @@
-import { faker } from '@faker-js/faker';
+const { faker } = require('@faker-js/faker');
 
-export function usersPayloads(config) {
+function usersPayloads(config) {
     return {
         authUser: {
             userName: config.env.NAME,
@@ -12,3 +12,5 @@ export function usersPayloads(config) {
         }
     };
 }
+
+module.exports = { usersPayloads };
