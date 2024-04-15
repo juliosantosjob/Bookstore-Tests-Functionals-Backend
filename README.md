@@ -118,7 +118,7 @@ To run the tests, use the following command:
 
 ## Last Execution Report
 You can access the report of the last execution 
-<a href="https://github.com/juliosantosjob/Cypress-Tests-Functionals-API.git">here</a>.
+<a href="https://juliosantosjob.github.io/Cypress-Tests-Functionals-API/">here</a>.
 
 ## Swagger application
 - <a href ="https://bookstore.toolsqa.com/swagger/">Book Store API</a>
