@@ -1,1 +1,0 @@
-before(() => Cypress.config('baseUrl', Cypress.env('staging')));
