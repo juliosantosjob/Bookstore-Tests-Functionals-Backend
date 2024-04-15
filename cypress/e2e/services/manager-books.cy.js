@@ -34,11 +34,6 @@ describe('Manage books', () => {
                 expect(status).to.equal(201);
                 expect(body.books[0].isbn).to.equal(isbn);
 
-                /**
-                 * Remove the added book and check if 
-                 * the favorites list is empty.
-                 */
-
                 cy.removeBooks(token, userId).then(() => {
                     cy.getProfile(token, userId).then(({ body }) =>
                         expect(body.books).to.be.empty);
