@@ -13,4 +13,4 @@ function usersPayloads(config) {
     };
 }
 
-module.exports = { usersPayloads };
+module.exports = usersPayloads;
