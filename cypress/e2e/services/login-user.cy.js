@@ -1,14 +1,14 @@
 /// <reference types="cypress" />
 
-import { authUser } from '../../payloads/users.payloads';
+import { _authUser } from '../../payloads/users.payloads';
 
 describe('Authorization', () => {
-    let authUsers;
+    let authUser;
     
-    beforeEach(() => authUsers = Object.assign({}, authUser));
+    beforeEach(() => authUser = Object.assign({}, _authUser));
     
     it.only('Log in successfully', () => {
-        cy.loginUser(authUsers).then(({ status, body }) => {
+        cy.loginUser(authUser).then(({ status, body }) => {
             expect(status).to.equal(200);
             expect(body.status).to.equal('Success');
             expect(body.result).to.equal('User authorized successfully.');
