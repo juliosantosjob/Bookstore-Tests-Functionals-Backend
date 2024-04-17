@@ -1,10 +1,14 @@
 /// <reference types="cypress" />
 
+import { users } from '../../payloads/users.payloads';
+
 describe('Finalize account', () => {
     let userId, token;
 
     beforeEach(() => {
-        cy.task('usersPayloads').then(({ dynamicUser }) => {
+        cy.wrap(users()).as('users');
+
+        cy.get('@users').then(({ dynamicUser }) => {
             cy.createUser(dynamicUser).then(({ body }) => {
                 userId = body.userID;
                 cy.loginUser(dynamicUser).then(({ body }) => {

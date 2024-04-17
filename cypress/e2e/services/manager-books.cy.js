@@ -1,6 +1,9 @@
 /// <reference types="cypress" />
 
-import { rand } from '../../support/dynamics';
+import { books as _books } from '../../fixtures/listBooks.json';
+import { users } from '../../payloads/users.payloads';
+
+const rand = Math.floor(Math.random() * _books.length);
 
 describe('Manage books', () => {
     it('Check information of a book', () => {
@@ -18,7 +21,7 @@ describe('Manage books', () => {
         let token, userId, isbn;
 
         before(() => {
-            cy.task('usersPayloads').then(({ authUser }) => {
+            cy.wrap(users()).then(({ authUser }) => {
                 cy.loginUser(authUser).then(({ body }) =>
                     token = body.token);
             });

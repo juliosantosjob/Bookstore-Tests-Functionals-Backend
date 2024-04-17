@@ -1,8 +1,12 @@
 /// <reference types="cypress" />
 
+import { users } from '../../payloads/users.payloads';
+
 describe('Authorization', () => {
+    beforeEach(() => cy.wrap(users()).as('users'));
+
     it('Log in successfully', () => {
-        cy.task('usersPayloads').then(({ authUser }) => {
+        cy.get('@users').then(({ authUser }) => {
             cy.loginUser(authUser).then(({ status, body }) => {
                 expect(status).to.equal(200);
                 expect(body.status).to.equal('Success');
@@ -12,7 +16,7 @@ describe('Authorization', () => {
     });
 
     it('Cannot login with invalid username', () => {
-        cy.task('usersPayloads').then(({ authUser }) => {
+        cy.get('@users').then(({ authUser }) => {
             authUser.userName = 'Invalid_name';
 
             cy.loginUser(authUser).then(({ body }) => {
@@ -23,7 +27,7 @@ describe('Authorization', () => {
     });
 
     it('Cannot login with invalid password', () => {
-        cy.task('usersPayloads').then(({ authUser }) => {
+        cy.get('@users').then(({ authUser }) => {
             authUser.password = 'Invalid_password';
 
             cy.loginUser(authUser).then(({ body }) => {
@@ -34,7 +38,7 @@ describe('Authorization', () => {
     });
 
     it('Cannot login with invalid username and password', () => {
-        cy.task('usersPayloads').then(({ authUser }) => {
+        cy.get('@users').then(({ authUser }) => {
             authUser.userName = 'Invalid_name';
             authUser.password = 'Invalid_password';
 
@@ -46,7 +50,7 @@ describe('Authorization', () => {
     });
 
     it('Cannot login with empty username', () => {
-        cy.task('usersPayloads').then(({ authUser }) => {
+        cy.get('@users').then(({ authUser }) => {
             authUser.userName = '';
 
             cy.loginUser(authUser).then(({ body }) => {
@@ -57,7 +61,7 @@ describe('Authorization', () => {
     });
 
     it('Cannot login with empty password', () => {
-        cy.task('usersPayloads').then(({ authUser }) => {
+        cy.get('@users').then(({ authUser }) => {
             authUser.password = '';
 
             cy.loginUser(authUser).then(({ body }) => {
@@ -68,7 +72,7 @@ describe('Authorization', () => {
     });
 
     it('Cannot login with empty username and password', () => {
-        cy.task('usersPayloads').then(({ authUser }) => {
+        cy.get('@users').then(({ authUser }) => {
             authUser.userName = '';
             authUser.password = '';
     
