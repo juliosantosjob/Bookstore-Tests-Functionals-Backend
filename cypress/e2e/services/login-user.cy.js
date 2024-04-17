@@ -3,12 +3,12 @@
 import { authUser } from '../../payloads/users.payloads';
 
 describe('Authorization', () => {
-    let authUser;
+    let authUsers;
     
-    beforeEach(() => authUser = Object.assign({}, authUser));
+    beforeEach(() => authUsers = Object.assign({}, authUser));
     
-    it('Log in successfully', () => {
-        cy.loginUser(authUser).then(({ status, body }) => {
+    it.only('Log in successfully', () => {
+        cy.loginUser(authUsers).then(({ status, body }) => {
             expect(status).to.equal(200);
             expect(body.status).to.equal('Success');
             expect(body.result).to.equal('User authorized successfully.');
