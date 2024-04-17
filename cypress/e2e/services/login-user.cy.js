@@ -3,6 +3,10 @@
 import { authUser } from '../../payloads/users.payloads';
 
 describe('Authorization', () => {
+    let authUser;
+    
+    beforeEach(() => authUser = Object.assign({}, authUser));
+    
     it('Log in successfully', () => {
         cy.loginUser(authUser).then(({ status, body }) => {
             expect(status).to.equal(200);
@@ -28,6 +32,15 @@ describe('Authorization', () => {
             expect(body.result).to.equal('User authorization failed.');
         });
     });
+    
+    it('Cannot login with empty username', () => {
+        authUser.userName = '';
+
+        cy.loginUser(authUser).then(({ body }) => {
+            expect(body.code).to.equal('1200');
+            expect(body.message).to.equal('UserName and Password required.');
+        });
+    });
 
     it('Cannot login with invalid username and password', () => {
         authUser.userName = 'Invalid_name';
@@ -36,15 +49,6 @@ describe('Authorization', () => {
         cy.loginUser(authUser).then(({ body }) => {
             expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
-        });
-    });
-
-    it('Cannot login with empty username', () => {
-        authUser.userName = '';
-
-        cy.loginUser(authUser).then(({ body }) => {
-            expect(body.code).to.equal('1200');
-            expect(body.message).to.equal('UserName and Password required.');
         });
     });
 
