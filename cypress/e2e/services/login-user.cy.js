@@ -7,7 +7,7 @@ describe('Authorization', () => {
     
     beforeEach(() => authUser = Object.assign({}, _authUser));
     
-    it.only('Log in successfully', () => {
+    it('Log in successfully', () => {
         cy.loginUser(authUser).then(({ status, body }) => {
             expect(status).to.equal(200);
             expect(body.status).to.equal('Success');
