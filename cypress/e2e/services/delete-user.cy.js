@@ -6,10 +6,10 @@ describe('Finalize account', () => {
     let userId, token;
 
     beforeEach(() => {
-            cy.createUser(dynamicUser).then(({ body }) => {
-                userId = body.userID;
-                cy.loginUser(dynamicUser).then(({ body }) => {
-                    token = body.token;
+        cy.createUser(dynamicUser).then(({ body }) => {
+            userId = body.userID;
+            cy.loginUser(dynamicUser).then(({ body }) => {
+                token = body.token;
             });
         });
     });

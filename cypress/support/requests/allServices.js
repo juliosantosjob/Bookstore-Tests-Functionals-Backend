@@ -15,23 +15,23 @@ Cypress.Commands.add('getProfile', (token, userId) => {
     });
 });
 
-Cypress.Commands.add('loginUser', ({ userName, password }) => {
+Cypress.Commands.add('loginUser', (credentials) => {
     cy.api({
         method: 'POST',
         url: '/Account/v1/GenerateToken',
         headers: { 'Content-Type': 'application/json ' },
         failOnStatusCode: false,
-        body: { userName: userName, password: password }
+        body: credentials
     });
 });
 
-Cypress.Commands.add('createUser', ({ userName, password }) => {
+Cypress.Commands.add('createUser', (userData) => {
     cy.api({
         method: 'POST',
         url: '/Account/v1/User',
         headers: { 'Content-Type': 'application/json ' },
         failOnStatusCode: false,
-        body: { userName: userName, password: password }
+        body: userData
     });
 });
 
