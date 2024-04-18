@@ -1,25 +1,25 @@
 /// <reference types="cypress" />
 
-import {
-    dynamicUser as _dynamicUser,
-    authUser as _authUser
-} from '../payloads/users.payloads';
+import { users } from '../payloads/users.payloads';
 
 describe('User registration', () => {
-    let dynamicUser;
+    let randUser, validUser;
 
     beforeEach(() => {
-        dynamicUser = _dynamicUser();
+        cy.wrap(users()).then(({ dynamicUser, authUser }) => {
+            randUser = dynamicUser;
+            validUser = authUser;
+        });
     });
 
     it('Must register a new user successfully', () => {
-        cy.createUser(dynamicUser).then(({ status, body }) => {
+        cy.createUser(randUser).then(({ status, body }) => {
             expect(status).to.equal(201);
             expect(body.userID).to.not.be.empty;
             expect(body.books).to.have.length(0);
-            expect(body.username).to.equal(dynamicUser.userName);
+            expect(body.username).to.equal(randUser.userName);
 
-            cy.loginUser(dynamicUser)
+            cy.loginUser(randUser)
                 .its('body.token')
                 .then((token) =>
                     cy.deleteAccount(token, body.userID));
@@ -27,9 +27,9 @@ describe('User registration', () => {
     });
 
     it('Do not register a user with a password that does not contain special characters', () => {
-        dynamicUser.password = 'invalid_password';
+        randUser.password = 'invalid_password';
 
-        cy.createUser(dynamicUser).then(({ body, status }) => {
+        cy.createUser(randUser).then(({ body, status }) => {
             expect(status).to.equal(400);
             expect(body.message).to.equal(
                 'Passwords must have at least one non alphanumeric character, ' +
@@ -41,26 +41,26 @@ describe('User registration', () => {
     });
 
     it('Does not register with a blank username', () => {
-        dynamicUser.userName = '';
+        randUser.userName = '';
 
-        cy.createUser(dynamicUser).then(({ body, status }) => {
+        cy.createUser(randUser).then(({ body, status }) => {
             expect(status).to.equal(400);
             expect(body.message).to.equal('UserName and Password required.');
         });
     });
 
     it('Does not register with a blank password and username', () => {
-        dynamicUser.userName = '';
-        dynamicUser.password = '';
+        randUser.userName = '';
+        randUser.password = '';
 
-        cy.createUser(dynamicUser).then(({ body, status }) => {
+        cy.createUser(randUser).then(({ body, status }) => {
             expect(status).to.equal(400);
             expect(body.message).to.equal('UserName and Password required.');
         });
     });
 
     it('Does not create an account with the same data as an existing account', () => {
-        cy.createUser(_authUser()).then(({ body, status }) => {
+        cy.createUser(validUser).then(({ body, status }) => {
             expect(status).to.equal(406);
             expect(body.message).to.equal('User exists!');
         });

@@ -1,16 +1,18 @@
 /// <reference types="cypress" />
 
-import { authUser as _authUser } from '../payloads/users.payloads';
+import { users } from '../payloads/users.payloads';
 
 describe('Authorization', () => {
-    let authUser;
-    
+    let validUser;
+
     beforeEach(() => {
-        authUser = _authUser();
+        cy.wrap(users()).then(({ authUser }) => {
+            validUser = authUser;
+        });
     });
 
     it('Log in successfully', () => {      
-        cy.loginUser(authUser).then(({ status, body }) => {
+        cy.loginUser(validUser).then(({ status, body }) => {
             expect(status).to.equal(200);
             expect(body.status).to.equal('Success');
             expect(body.result).to.equal('User authorized successfully.');
@@ -18,56 +20,56 @@ describe('Authorization', () => {
     });
 
     it('Cannot login with empty username', () => {
-        authUser.userName = '';
+        validUser.userName = '';
 
-        cy.loginUser(authUser).then(({ body }) => {
+        cy.loginUser(validUser).then(({ body }) => {
             expect(body.code).to.equal('1200');
             expect(body.message).to.equal('UserName and Password required.');
         });
     });
 
     it('Cannot login with empty password', () => {
-        authUser.password = '';
+        validUser.password = '';
 
-        cy.loginUser(authUser).then(({ body }) => {
+        cy.loginUser(validUser).then(({ body }) => {
             expect(body.code).to.equal('1200');
             expect(body.message).to.equal('UserName and Password required.');
         });
     });
 
     it('Cannot login with empty username and password', () => {
-        authUser.userName = '';
-        authUser.password = '';
+        validUser.userName = '';
+        validUser.password = '';
 
-        cy.loginUser(authUser).then(({ body }) => {
+        cy.loginUser(validUser).then(({ body }) => {
             expect(body.code).to.equal('1200');
             expect(body.message).to.equal('UserName and Password required.');
         });
     });
     
     it('Cannot login with invalid username', () => {
-        authUser.userName = 'Invalid_name';
+        validUser.userName = 'Invalid_name';
 
-        cy.loginUser(authUser).then(({ body }) => {
+        cy.loginUser(validUser).then(({ body }) => {
             expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
         });
     });
 
     it('Cannot login with invalid password', () => {
-        authUser.password = 'Invalid_password';
+        validUser.password = 'Invalid_password';
 
-        cy.loginUser(authUser).then(({ body }) => {
+        cy.loginUser(validUser).then(({ body }) => {
             expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
         });
     });
 
     it('Cannot login with invalid username and password', () => {
-        authUser.userName = 'Invalid_name';
-        authUser.password = 'Invalid_password';
+        validUser.userName = 'Invalid_name';
+        validUser.password = 'Invalid_password';
 
-        cy.loginUser(authUser).then(({ body }) => {
+        cy.loginUser(validUser).then(({ body }) => {
             expect(body.status).to.equal('Failed');
             expect(body.result).to.equal('User authorization failed.');
         });
