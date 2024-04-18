@@ -5,7 +5,7 @@ import { authUser } from '../payloads/users.payloads';
 
 const rand = Math.floor(Math.random() * books.length);
 
-describe('Manage books', () => {  
+describe('Manage books', () => {
     it('Check information of a book', () => {
         cy.fixture('listBooks').then((list) => {
             cy.getBookList().then(({ status, body }) => {
@@ -21,7 +21,7 @@ describe('Manage books', () => {
         let token, userId, isbn;
 
         before(() => {
-            cy.loginUser(authUser).then(({ body }) => 
+            cy.loginUser(authUser()).then(({ body }) => 
                 token = body.token);
 
             cy.getBookList().then(({ body }) =>

@@ -1,9 +1,13 @@
 /// <reference types="cypress" />
 
-import { dynamicUser } from '../payloads/users.payloads';
+import { dynamicUser as _dynamicUser } from '../payloads/users.payloads';
 
 describe('Finalize account', () => {
-    let userId, token;
+    let userId, token, dynamicUser;
+    
+    beforeEach(() => {
+        dynamicUser = _dynamicUser();
+    });
 
     beforeEach(() => {      
         cy.createUser(dynamicUser).then(({ body }) => {

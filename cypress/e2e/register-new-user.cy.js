@@ -1,8 +1,17 @@
 /// <reference types="cypress" />
 
-import { dynamicUser, authUser } from '../payloads/users.payloads';
+import {
+    dynamicUser as _dynamicUser,
+    authUser as _authUser
+} from '../payloads/users.payloads';
 
 describe('User registration', () => {
+    let dynamicUser;
+
+    beforeEach(() => {
+        dynamicUser = _dynamicUser();
+    });
+
     it('Must register a new user successfully', () => {
         cy.createUser(dynamicUser).then(({ status, body }) => {
             expect(status).to.equal(201);
@@ -12,7 +21,7 @@ describe('User registration', () => {
 
             cy.loginUser(dynamicUser)
                 .its('body.token')
-                .then((token) => 
+                .then((token) =>
                     cy.deleteAccount(token, body.userID));
         });
     });
@@ -51,7 +60,7 @@ describe('User registration', () => {
     });
 
     it('Does not create an account with the same data as an existing account', () => {
-        cy.createUser(authUser).then(({ body, status }) => {
+        cy.createUser(_authUser()).then(({ body, status }) => {
             expect(status).to.equal(406);
             expect(body.message).to.equal('User exists!');
         });
