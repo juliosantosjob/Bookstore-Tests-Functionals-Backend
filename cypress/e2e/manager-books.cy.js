@@ -1,15 +1,11 @@
 /// <reference types="cypress" />
 
-import { books } from '../../fixtures/listBooks.json';
-import { _authUser } from '../../payloads/users.payloads';
+import { books } from '../fixtures/listBooks.json';
+import { authUser } from '../payloads/users.payloads';
 
 const rand = Math.floor(Math.random() * books.length);
 
-describe('Manage books', () => {
-    let authUser;
-    
-    beforeEach(() => authUser = Object.assign({}, _authUser));
-    
+describe('Manage books', () => {  
     it('Check information of a book', () => {
         cy.fixture('listBooks').then((list) => {
             cy.getBookList().then(({ status, body }) => {

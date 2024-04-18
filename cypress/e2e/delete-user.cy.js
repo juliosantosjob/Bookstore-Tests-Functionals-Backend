@@ -1,13 +1,11 @@
 /// <reference types="cypress" />
 
-import { _dynamicUser } from '../../payloads/users.payloads';
+import { dynamicUser } from '../payloads/users.payloads';
 
 describe('Finalize account', () => {
-    let userId, token, dynamicUser;
+    let userId, token;
 
-    beforeEach(() => {
-        dynamicUser = Object.assign({}, _dynamicUser);
-        
+    beforeEach(() => {      
         cy.createUser(dynamicUser).then(({ body }) => {
             userId = body.userID;
             cy.loginUser(dynamicUser).then(({ body }) => {
@@ -23,7 +21,9 @@ describe('Finalize account', () => {
         });
     });
 
-    afterEach(() => cy.deleteAccount(token, userId));
+    afterEach(() => {
+        cy.deleteAccount(token, userId);
+    });
 
     it('Do not delete a user without authorization', () => {
         token = 'invalid_token';

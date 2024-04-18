@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { dynamicUser, authUser } from '../../payloads/users.payloads';
+import { dynamicUser, authUser } from '../payloads/users.payloads';
 
 describe('User registration', () => {
     it('Must register a new user successfully', () => {
@@ -12,7 +12,8 @@ describe('User registration', () => {
 
             cy.loginUser(dynamicUser)
                 .its('body.token')
-                .then((token) => cy.deleteAccount(token, body.userID));
+                .then((token) => 
+                    cy.deleteAccount(token, body.userID));
         });
     });
 
