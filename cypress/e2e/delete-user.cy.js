@@ -6,7 +6,7 @@ describe('Finalize account', () => {
     let userId, token, randUser;
 
     beforeEach(() => {
-        cy.wrap(users()).then(({ dynamicUser }) => {
+        users().then(({ dynamicUser }) => {
             randUser = dynamicUser;
         });
     });
