@@ -27,8 +27,8 @@ jobs:
         with:
           wait-on-timeout: 60
         env:
-          STAGING: ${{secrets.STAGING}}
           LOCAL: ${{secrets.LOCAL}}
+          STAGING: ${{secrets.STAGING}}
           PROD: ${{secrets.PROD}}
           NAME: ${{secrets.NAME}}
           PASSWORD: ${{secrets.PASSWORD}}
