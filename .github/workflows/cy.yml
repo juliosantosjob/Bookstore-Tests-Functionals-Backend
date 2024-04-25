@@ -27,7 +27,9 @@ jobs:
         with:
           wait-on-timeout: 60
         env:
-          BASE_URL: ${{secrets.BASE_URL}}
+          STAGING: ${{secrets.STAGING}}
+          LOCAL: ${{secrets.LOCAL}}
+          PROD: ${{secrets.PROD}}
           NAME: ${{secrets.NAME}}
           PASSWORD: ${{secrets.PASSWORD}}
           USER_ID: ${{secrets.USER_ID}}
