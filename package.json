@@ -7,8 +7,9 @@
     "allure:report": "allure generate allure-results --clean -o allure-report",
     "allure:history": "if exist allure-report/history move allure-report/history allure-results/history",
     "allure:clear": "rmdir /s /q allure-results && rmdir /s /q allure-report",
-    "test": "allure generate allure-results --clean && npx cypress run",
-    "open": "cypress open",
+    "test:stg": "allure generate allure-results --clean && npx cypress run --env version=staging",
+    "open:stg": "npx cypress open --env version=staging",
+    "open": "npx cypress open",
     "lint": "eslint cypress"
   },
   "keywords": [],
