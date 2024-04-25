@@ -27,6 +27,7 @@ jobs:
         with:
           wait-on-timeout: 60
         env:
+          version: staging
           LOCAL: ${{secrets.LOCAL}}
           STAGING: ${{secrets.STAGING}}
           PROD: ${{secrets.PROD}}
