@@ -15,7 +15,9 @@ module.exports = defineConfig({
                 prod: process.env.PROD
             };
 
-            config.baseUrl = urls[version];
+            config.env.setBase = urls[version];
+
+            config.baseUrl = config.env.setBase;
             config.env.NAME = process.env.NAME;
             config.env.PASSWORD = process.env.PASSWORD;
             config.env.USER_ID = process.env.USER_ID;
