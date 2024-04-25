@@ -6,7 +6,7 @@ function getBaseUrl(config) {
         prod: process.env.PROD
     };
 
-    if (!urls.hasOwnProperty(version)) {
+    if (!urls[version]) {
         throw new Error(`Invalid version: ${version}`);
     }
 
