@@ -1,5 +1,5 @@
 function getBaseUrl(config) {
-    const version = config.env.version || 'staging';
+    const version = config.env.version;
     const urls = {
         local: process.env.LOCAL,
         staging: process.env.STAGING,
@@ -12,5 +12,3 @@ function getBaseUrl(config) {
 
     return urls[version];
 }
-
-module.exports = { getBaseUrl };
