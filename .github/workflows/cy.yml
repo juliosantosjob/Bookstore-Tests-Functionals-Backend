@@ -26,7 +26,6 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           wait-on-timeout: 60
-          config: baseUrl=${{secrets.STAGING}}
         env:
           LOCAL: ${{secrets.LOCAL}}
           STAGING: ${{secrets.STAGING}}

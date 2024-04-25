@@ -9,6 +9,9 @@ module.exports = defineConfig({
         screenshotOnRunFailure: false,
         setupNodeEvents(on, config) {
             config.baseUrl = getBaseUrl(config);
+            config.env.NAME = process.env.NAME;
+            config.env.PASSWORD = process.env.PASSWORD;
+            config.env.USER_ID = process.env.USER_ID;
 
             allureCypress(on);
             return config;
