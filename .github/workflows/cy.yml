@@ -10,11 +10,17 @@ on:
     - cron: "0 12,20 * * 1-5"
 
 jobs:
-  regression-test:
-    runs-on: ubuntu-latest
-    env:
-      ENVIRONMENT: staging
-      
+  regression-cypress:
+    inputs:
+      environment:
+        description: 'Environment to run the tests (staging, local, prod)'
+        required: true
+        default: 'staging'
+        options:
+          staging: 'staging'
+          local: 'local'
+          prod: 'prod'
+
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v3
@@ -36,7 +42,7 @@ jobs:
           NAME: ${{ secrets.NAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           USER_ID: ${{ secrets.USER_ID }}
-          HOST: ${{ secrets.HOST }}
+          HOST: ${{ github.event.inputs.environment }}
           build: npm run build
           start: npm run test:stg
 
