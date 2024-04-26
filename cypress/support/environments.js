@@ -1,9 +1,11 @@
+const { HOST, LOCAL, STAGING, PROD } = process.env;
+
 function getBaseUrl() {
-    const version = process.env.HOST;
+    const version = HOST || 'staging';
     const urls = {
-        local: process.env.LOCAL,
-        staging: process.env.STAGING,
-        prod: process.env.PROD
+        local: LOCAL,
+        staging: STAGING,
+        prod: PROD
     };
     return urls[version];
 }

@@ -8,8 +8,8 @@ export function users() {
             password: PASSWORD
         },
         dynamicUser: {
-            userName: faker.internet.userName().substring(5),
-            password: faker.internet.password().substring(7) + 'M@123'
+            userName: faker.internet.userName(),
+            password: faker.internet.password() + 'Pw@321'
         }
     };
 };
