@@ -1,4 +1,4 @@
-const { HOST, LOCAL STAGING, PROD } = process.env;
+const { HOST, LOCAL, STAGING, PROD } = process.env;
 
 function getBaseUrl() {
     const version = HOST;
