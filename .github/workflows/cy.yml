@@ -33,7 +33,7 @@ jobs:
           NAME: ${{ secrets.NAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           USER_ID: ${{ secrets.USER_ID }}
-          USER_ID: ${{ secrets.HOST }}
+          HOST: ${{ secrets.HOST }}
           build: npm run build
           start: npm run test:stg
 
