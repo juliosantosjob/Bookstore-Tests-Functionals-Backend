@@ -9,7 +9,7 @@ module.exports = defineConfig({
         video: false,
         screenshotOnRunFailure: false,
         setupNodeEvents(on, config) {
-            config.baseUrl = getBaseUrl(config);
+            config.baseUrl = getBaseUrl();
 
             allureCypress(on);
             return config;

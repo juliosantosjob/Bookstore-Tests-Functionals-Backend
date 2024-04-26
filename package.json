@@ -7,9 +7,10 @@
     "allure:report": "allure generate allure-results --clean -o allure-report",
     "allure:history": "if exist allure-report/history move allure-report/history allure-results/history",
     "allure:clear": "rmdir /s /q allure-results && rmdir /s /q allure-report",
-    "test:stg": "allure generate allure-results --clean && npx cypress run --env version=staging",
-    "test:lcl": "allure generate allure-results --clean && npx cypress run --env version=local",
-    "open:stg": "npx cypress open --env version=staging",
+    "test:stg": "cross-env HOST=staging allure generate allure-results --clean && npx cypress run",
+    "test:lcl": "cross-env HOST=local allure generate allure-results --clean && npx cypress run",
+    "open:stg": "cross-env HOST=staging npx cypress open",
+    "open:lcl": "cross-env HOST=local npx cypress open",
     "open": "npx cypress open",
     "lint": "eslint cypress"
   },
@@ -20,6 +21,7 @@
     "@faker-js/faker": "^8.0.2",
     "allure-commandline": "^2.27.0",
     "allure-cypress": "^2.15.0",
+    "cross-env": "^7.0.3",
     "cypress": "^13.6.6",
     "eslint-plugin-cypress": "^2.15.1"
   },

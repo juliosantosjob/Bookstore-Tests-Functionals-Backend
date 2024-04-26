@@ -34,7 +34,7 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           USER_ID: ${{ secrets.USER_ID }}
           build: npm run build
-          start: npm run test:lcl
+          start: npm run test:stg
 
       - name: Load test report history
         uses: actions/checkout@v3

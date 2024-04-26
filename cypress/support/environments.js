@@ -1,15 +1,21 @@
-function getBaseUrl(config) {
-    const version = config.env.host || 'staging';
+const {
+    HOST,
+    LOCAL,
+    STAGING,
+    PROD
+} = process.env;
+
+function getBaseUrl() {
+    const version = HOST;
     const urls = {
-        local: process.env.LOCAL,
-        staging: process.env.STAGING,
-        prod: process.env.PROD
+        local: LOCAL,
+        staging: STAGING,
+        prod: PROD
     };
 
     if (!urls[version]) {
         throw new Error(`Invalid version: ${version}`);
     }
-
     return urls[version];
 }
 
