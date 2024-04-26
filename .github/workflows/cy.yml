@@ -11,15 +11,15 @@ on:
 
 jobs:
   regression-cypress:
-    inputs:
-      environment:
-        description: 'Environment to run the tests (staging, local, prod)'
-        required: true
-        default: 'staging'
-        options:
-          staging: 'staging'
-          local: 'local'
-          prod: 'prod'
+    runs-on: ubuntu-latest
+    env:
+      HOST: staging
+      LOCAL: ${{ secrets.LOCAL }}
+      STAGING: ${{ secrets.STAGING }}
+      PROD: ${{ secrets.PROD }}
+      NAME: ${{ secrets.NAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      USER_ID: ${{ secrets.USER_ID }}
 
     steps:
       - name: Checkout 🛎
@@ -27,23 +27,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-      
+
       - name: Verification with eslint
         run: npm run lint
-        
+
       - name: Run Cypress Tests 🧪
         uses: cypress-io/github-action@v5
         with:
           wait-on-timeout: 60
-        env:
-          LOCAL: ${{ secrets.LOCAL }}
-          STAGING: ${{ secrets.STAGING }}
-          PROD: ${{ secrets.PROD }}
-          NAME: ${{ secrets.NAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          USER_ID: ${{ secrets.USER_ID }}
-          HOST: ${{ github.event.inputs.environment }}
-          build: npm run build
           start: npm run test:stg
 
       - name: Load test report history
