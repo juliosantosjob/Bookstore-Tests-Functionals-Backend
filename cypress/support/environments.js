@@ -13,9 +13,6 @@ function getBaseUrl() {
         prod: PROD
     };
 
-    if (!urls[version]) {
-        throw new Error(`Invalid version: ${version}`);
-    }
     return urls[version];
 }
 
