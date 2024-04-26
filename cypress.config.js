@@ -8,14 +8,8 @@ module.exports = defineConfig({
         video: false,
         screenshotOnRunFailure: false,
         setupNodeEvents(on, config) {
-            const version = config.env.version;
-            const urls = {
-                local: process.env.LOCAL,
-                staging: process.env.STAGING,
-                prod: process.env.PROD
-            };
 
-            config.baseUrl = urls[version];
+            config.baseUrl = getBaseUrl(config);
             config.env.NAME = process.env.NAME;
             config.env.PASSWORD = process.env.PASSWORD;
             config.env.USER_ID = process.env.USER_ID;
