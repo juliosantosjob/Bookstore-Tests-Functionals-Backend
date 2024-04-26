@@ -27,14 +27,14 @@ jobs:
         with:
           wait-on-timeout: 60
         env:
-          LOCAL: ${{secrets.LOCAL}}
-          STAGING: ${{secrets.STAGING}}
-          PROD: ${{secrets.PROD}}
-          NAME: ${{secrets.NAME}}
-          PASSWORD: ${{secrets.PASSWORD}}
-          USER_ID: ${{secrets.USER_ID}}
+          LOCAL: ${{ secrets.LOCAL }}
+          STAGING: ${{ secrets.STAGING }}
+          PROD: ${{ secrets.PROD }}
+          NAME: ${{ secrets.NAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          USER_ID: ${{ secrets.USER_ID }}
           build: npm run build
-          start: npm run test --env version=staging
+          start: npm run test:stg
 
       - name: Load test report history
         uses: actions/checkout@v3
