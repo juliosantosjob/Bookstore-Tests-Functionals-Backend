@@ -11,6 +11,7 @@
     "test:lcl": "cross-env HOST=local allure generate allure-results --clean && npx cypress run",
     "open:stg": "cross-env HOST=staging npx cypress open",
     "open:lcl": "cross-env HOST=local npx cypress open",
+    "test": "allure generate allure-results --clean && npx cypress run",
     "open": "npx cypress open",
     "lint": "eslint cypress"
   },
