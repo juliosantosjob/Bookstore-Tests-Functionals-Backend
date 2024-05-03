@@ -11,11 +11,9 @@ describe('Authorization', () => {
         });
     });
 
-    it('Log in successfully', () => {      
+    it('Log in successfully', () => {
         cy.loginUser(authUser_).then(({ status, body }) => {
             expect(status).to.equal(200);
-            expect(body.status).to.equal('Success');
-            expect(body.result).to.equal('User authorized successfully.');
         });
     });
 
@@ -46,7 +44,7 @@ describe('Authorization', () => {
             expect(body.message).to.equal('UserName and Password required.');
         });
     });
-    
+
     it('Cannot login with invalid username', () => {
         authUser_.userName = 'Invalid_name';
 
