@@ -3,18 +3,18 @@
 import { users } from '../payloads/users.payloads';
 
 describe('Finalize account', () => {
-    let userId, token, randUser;
+    let userId, token, dynamicUser_;
 
     beforeEach(() => {
         cy.wrap(users()).then(({ dynamicUser }) => {
-            randUser = dynamicUser;
+            dynamicUser_ = dynamicUser;
         });
     });
 
     beforeEach(() => {
-        cy.createUser(randUser).then(({ body }) => {
+        cy.createUser(dynamicUser_).then(({ body }) => {
             userId = body.userID;
-            cy.loginUser(randUser).then(({ body }) => {
+            cy.loginUser(dynamicUser_).then(({ body }) => {
                 token = body.token;
             });
         });
