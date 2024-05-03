@@ -6,14 +6,6 @@ import { users } from '../payloads/users.payloads';
 const rand = Math.floor(Math.random() * books.length);
 
 describe('Manage books', () => {
-    let validUser;
-
-    beforeEach(() => {
-        cy.wrap(users()).then(({ authUser }) => {
-            validUser = authUser;
-        });
-    });
-
     it('Check information of a book', () => {
         cy.fixture('listBooks').then((list) => {
             cy.getBookList().then(({ status, body }) => {
@@ -26,14 +18,20 @@ describe('Manage books', () => {
     });
 
     context('When authenticated', () => {
-        let token, userId, isbn;
+        let token, userId, isbn, authUser_;
 
         before(() => {
-            cy.loginUser(validUser).then(({ body }) => 
-                token = body.token);
+            cy.wrap(users()).then(({ authUser }) => {
+                authUser_ = authUser;
 
-            cy.getBookList().then(({ body }) =>
-                isbn = body.books[rand].isbn);
+                cy.loginUser(authUser_).then(({ body }) => {
+                    token = body.token;
+
+                    cy.getBookList().then(({ body }) => {
+                        isbn = body.books[rand].isbn;
+                    });
+                });
+            });
         });
 
         it('Add and remove a book from the favorites list', () => {
@@ -44,8 +42,9 @@ describe('Manage books', () => {
                 expect(body.books[0].isbn).to.equal(isbn);
 
                 cy.removeBooks(token, userId).then(() => {
-                    cy.getProfile(token, userId).then(({ body }) =>
-                        expect(body.books).to.be.empty);
+                    cy.getProfile(token, userId).then(({ body }) => {
+                        expect(body.books).to.be.empty;
+                    });
                 });
             });
         });
