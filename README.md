@@ -73,15 +73,16 @@ Make sure you have the following tools installed on your machine:
 npm install
   ```
 
-3. Create a `cypress.env.json` file in the root directory of the project to set up the necessary environment variables. In the root of the project, there is a file called `cypress.env.example`. Use this file as a template to fill in your variables, example:
+3. Create a `.env` file in the root directory of the project to set up the necessary environment variables. In the root of the project, there is a file called `.env.example`. Use this file as a template to fill in your variables, example:
 
   ```bash
-{
-    "BASE_URL": "Base URL informed in the readme",
-    "NAME": "name_example",
-    "PASSWORD": "password_example",
-    "USER_ID": "id_user_example"    
-}
+LOCAL=http://localhost:3000
+STAGING=<Base URL informed in the readme>
+PROD=https://example.com
+
+NAME=<name_example>
+PASSWORD=<password_example>
+USER_ID=<id_user_example>
   ```
 
 ## Creating a user in the Bookstore API to run the test
