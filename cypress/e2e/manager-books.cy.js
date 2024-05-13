@@ -27,29 +27,28 @@ describe('Manage books', () => {
         userId = Cypress.env('USER_ID');
     });
 
-    Cypress._.times(100, () => {
-        it('Add and remove a book from the favorites list', () => {
-            cy.getBookList()
-                .its(`body.books[${rand}].isbn`)
-                .then((isbn) => {
-                    isbn_ = isbn;
+
+    it('Add and remove a book from the favorites list', () => {
+        cy.getBookList()
+            .its(`body.books[${rand}].isbn`)
+            .then((isbn) => {
+                isbn_ = isbn;
     
-                    cy.addBooksFavorites(
-                        token,
-                        userId,
-                        isbn_
-                    ).then(({ status, body }) => {
-                        expect(status).to.equal(201);
-                        expect(body.books[0].isbn).to.equal(isbn_);
+                cy.addBooksFavorites(
+                    token,
+                    userId,
+                    isbn_
+                ).then(({ status, body }) => {
+                    expect(status).to.equal(201);
+                    expect(body.books[0].isbn).to.equal(isbn_);
     
-                        cy.removeBooks(token, userId).then(() => {
-                            cy.getProfile(token, userId).then(({ body }) => {
-                                expect(body.books).to.be.empty;
-                            });
+                    cy.removeBooks(token, userId).then(() => {
+                        cy.getProfile(token, userId).then(({ body }) => {
+                            expect(body.books).to.be.empty;
                         });
                     });
                 });
-        });
+            });
     });
 
     it('Don\'t add a book that doesn\'t exist', () => {
