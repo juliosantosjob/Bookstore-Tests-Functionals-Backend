@@ -6,6 +6,10 @@ on:
     branches:
       - 'main'
 
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 5b25cd45258f8c430a0c322ee7482619c99ced04
   schedule:
     - cron: "0 12,20 * * 1-5"
 

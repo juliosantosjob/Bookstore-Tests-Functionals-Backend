@@ -31,6 +31,7 @@ Cypress._.times(100, () => {
         });
 
 
+<<<<<<< HEAD
         it('Add and remove a book from the favorites list', () => {
             cy.getBookList()
                 .its(`body.books[${rand}].isbn`)
@@ -53,6 +54,31 @@ Cypress._.times(100, () => {
                     });
                 });
         });
+=======
+
+    it('Add and remove a book from the favorites list', () => {
+        cy.getBookList()
+            .its(`body.books[${rand}].isbn`)
+            .then((isbn) => {
+                isbn_ = isbn;
+    
+                cy.addBooksFavorites(
+                    token,
+                    userId,
+                    isbn_
+                ).then(({ status, body }) => {
+                    expect(status).to.equal(201);
+                    expect(body.books[0].isbn).to.equal(isbn_);
+    
+                    cy.removeBooks(token, userId).then(() => {
+                        cy.getProfile(token, userId).then(({ body }) => {
+                            expect(body.books).to.be.empty;
+                        });
+                    });
+                });
+            });
+    });
+>>>>>>> 5b25cd45258f8c430a0c322ee7482619c99ced04
 
 
         it('Don\'t add a book that doesn\'t exist', () => {
