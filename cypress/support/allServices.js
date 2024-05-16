@@ -15,23 +15,29 @@ Cypress.Commands.add('getProfile', (token, userId) => {
     });
 });
 
-Cypress.Commands.add('loginUser', (credentials) => {
+Cypress.Commands.add('loginUser', ({ userName, password }) => {
     cy.api({
         method: 'POST',
         url: '/Account/v1/GenerateToken',
         headers: { 'Content-Type': 'application/json ' },
         failOnStatusCode: false,
-        body: credentials
+        body: {
+            userName: userName,
+            password: password
+        }
     });
 });
 
-Cypress.Commands.add('createUser', (userData) => {
+Cypress.Commands.add('createUser', ({ userName, password }) => {
     cy.api({
         method: 'POST',
         url: '/Account/v1/User',
         headers: { 'Content-Type': 'application/json ' },
         failOnStatusCode: false,
-        body: userData
+        body: {
+            userName: userName,
+            password: password
+        }
     });
 });
 
@@ -41,7 +47,15 @@ Cypress.Commands.add('addBooksFavorites', (token, userId, numberIsbn) => {
         url: '/BookStore/v1/Books',
         failOnStatusCode: false,
         headers: { Authorization: `Bearer ${token}` },
-        body: { userId: userId, collectionOfIsbns: [{ isbn: numberIsbn }] }
+        body: {
+            userId: userId,
+            collectionOfIsbns: [
+                {
+                    isbn: numberIsbn
+
+                }
+            ]
+        }
     });
 });
 

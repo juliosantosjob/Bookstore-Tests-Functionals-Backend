@@ -6,6 +6,9 @@ on:
     branches:
       - 'main'
 
+  schedule:
+    - cron: "0 12,20 * * 1-5"
+
 jobs:
   regression-cypress:
     runs-on: ubuntu-latest
