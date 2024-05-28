@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import { books } from '../fixtures/listBooks.json';
-import { authUser } from '../payloads/users.payloads';
+import { dynamicUser } from '../payloads/users.payloads';
 
 const rand = Math.floor(Math.random() * books.length);
 
@@ -20,8 +20,11 @@ describe('Manage books', () => {
     });
 
     before(() => {
-        cy.loginUser(authUser).then(({ body }) => {
-            token = body.token;
+        cy.createUser(dynamicUser).then(({ body }) => {
+            userId = body.userID;
+            cy.loginUser(dynamicUser).then(({ body }) => {
+                token = body.token;
+            });
         });
     });
 
