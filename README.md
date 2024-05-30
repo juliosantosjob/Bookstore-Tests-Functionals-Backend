@@ -117,10 +117,6 @@ To run the tests, use the following command:
   npm run test
   ```
 
-## Last Execution Report
-You can access the report of the last execution 
-<a href="https://juliosantosjob.github.io/Cypress-Tests-Functionals-API/">here</a>.
-
 ## Swagger application
 - <a href ="https://bookstore.toolsqa.com/swagger/">Book Store API</a>
 

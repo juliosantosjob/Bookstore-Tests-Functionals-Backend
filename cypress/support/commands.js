@@ -1,3 +1,9 @@
+/**
+ * Fetches a list of books from the Bookstore API.
+ *
+ * @return {Object} The response object from the API call.
+ */
+
 Cypress.Commands.add('getBookList', () => {
     cy.api({
         method: 'GET',
@@ -5,6 +11,14 @@ Cypress.Commands.add('getBookList', () => {
         failOnStatusCode: false
     });
 });
+
+/**
+ * Adds a book to the favorites list.
+ *
+ * @param {string} token - The token of the user.
+ * @param {string} userId - The user ID of the user.
+ */
+
 
 Cypress.Commands.add('getProfile', (token, userId) => {
     cy.api({
@@ -14,6 +28,12 @@ Cypress.Commands.add('getProfile', (token, userId) => {
         headers: { Authorization: `Bearer ${token}` }
     });
 });
+
+/**
+ * Logs in a user and returns the token.
+ * 
+ * @param {Object} user - The user object with the username and password.
+ */
 
 Cypress.Commands.add('loginUser', ({ userName, password }) => {
     cy.api({
@@ -28,6 +48,12 @@ Cypress.Commands.add('loginUser', ({ userName, password }) => {
     });
 });
 
+/**
+ * Creates a new user.
+ * 
+ * @param {Object} user - The user object with the username and password.
+ */
+
 Cypress.Commands.add('createUser', ({ userName, password }) => {
     cy.api({
         method: 'POST',
@@ -41,6 +67,13 @@ Cypress.Commands.add('createUser', ({ userName, password }) => {
     });
 });
 
+/**
+ * Adds a book to the favorites list.
+ *
+ * @param {string} token - The token of the user.
+ * @param {string} userId - The user ID of the user.
+ */
+
 Cypress.Commands.add('addBooksFavorites', (token, userId, numberIsbn) => {
     cy.api({
         method: 'POST',
@@ -49,15 +82,17 @@ Cypress.Commands.add('addBooksFavorites', (token, userId, numberIsbn) => {
         headers: { Authorization: `Bearer ${token}` },
         body: {
             userId: userId,
-            collectionOfIsbns: [
-                {
-                    isbn: numberIsbn
-
-                }
-            ]
+            collectionOfIsbns: [{ isbn: numberIsbn }]
         }
     });
 });
+
+/**
+ * Removes a book from the favorites list.
+ *
+ * @param {string} token - The token of the user.
+ * @param {string} userId - The user ID of the user.
+ */
 
 Cypress.Commands.add('removeBooks', (token, userId) => {
     cy.api({
@@ -67,6 +102,13 @@ Cypress.Commands.add('removeBooks', (token, userId) => {
         headers: { Authorization: `Bearer ${token}` }
     });
 });
+
+/**
+ * Deletes a user.
+ *
+ * @param {string} token - The token of the user.
+ * @param {string} userId - The user ID of the user.
+ */
 
 Cypress.Commands.add('deleteAccount', (token, userId) => {
     cy.api({
