@@ -10,8 +10,8 @@ const e2e = {
     }
 };
 
-module.exports = defineConfig({ 
+module.exports = defineConfig({
     ...
     baseConfig, 
-    e2e 
+    e2e
 });

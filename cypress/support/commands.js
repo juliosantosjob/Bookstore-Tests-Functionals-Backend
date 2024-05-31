@@ -72,6 +72,7 @@ Cypress.Commands.add('createUser', ({ userName, password }) => {
  *
  * @param {string} token - The token of the user.
  * @param {string} userId - The user ID of the user.
+ * @param {string} numberIsbn - The ISBN number of the book.
  */
 
 Cypress.Commands.add('addBooksFavorites', (token, userId, numberIsbn) => {
