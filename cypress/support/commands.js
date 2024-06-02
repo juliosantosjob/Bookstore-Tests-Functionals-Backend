@@ -5,7 +5,7 @@
  */
 
 Cypress.Commands.add('getBookList', () => {
-    cy.request({
+    cy.api({
         method: 'GET',
         url: '/BookStore/v1/Books',
         failOnStatusCode: false
@@ -21,7 +21,7 @@ Cypress.Commands.add('getBookList', () => {
 
 
 Cypress.Commands.add('getProfile', (token, userId) => {
-    cy.request({
+    cy.api({
         method: 'GET',
         url: `/Account/v1/User/${userId}`,
         failOnStatusCode: false,
@@ -36,7 +36,7 @@ Cypress.Commands.add('getProfile', (token, userId) => {
  */
 
 Cypress.Commands.add('loginUser', ({ userName, password }) => {
-    cy.request({
+    cy.api({
         method: 'POST',
         url: '/Account/v1/GenerateToken',
         headers: { 'Content-Type': 'application/json ' },
@@ -55,7 +55,7 @@ Cypress.Commands.add('loginUser', ({ userName, password }) => {
  */
 
 Cypress.Commands.add('createUser', ({ userName, password }) => {
-    cy.request({
+    cy.api({
         method: 'POST',
         url: '/Account/v1/User',
         headers: { 'Content-Type': 'application/json ' },
@@ -76,7 +76,7 @@ Cypress.Commands.add('createUser', ({ userName, password }) => {
  */
 
 Cypress.Commands.add('addBooksFavorites', (token, userId, numberIsbn) => {
-    cy.request({
+    cy.api({
         method: 'POST',
         url: '/BookStore/v1/Books',
         failOnStatusCode: false,
@@ -96,7 +96,7 @@ Cypress.Commands.add('addBooksFavorites', (token, userId, numberIsbn) => {
  */
 
 Cypress.Commands.add('removeBooks', (token, userId) => {
-    cy.request({
+    cy.api({
         method: 'DELETE',
         url: `/BookStore/v1/Books?UserId=${userId}`,
         failOnStatusCode: false,
@@ -112,7 +112,7 @@ Cypress.Commands.add('removeBooks', (token, userId) => {
  */
 
 Cypress.Commands.add('deleteAccount', (token, userId) => {
-    cy.request({
+    cy.api({
         method: 'DELETE',
         url: `/Account/v1/User/${userId}`,
         failOnStatusCode: false,

@@ -4,14 +4,15 @@
   "description": "Backend test automation representative using Cypress best practices such as: Cypress commands, fixtures and random data.",
   "main": "cypress.config.js",
   "scripts": {
-    "open:dev": "cypress open --config-file cypress/support/env/config-dev.js",
-    "open:prod": "cypress open --config-file cypress/support/env/config-prod.js",
-    "open:stg": "cypress open --config-file cypress/support/env/config-stg.js",
-    "test:dev": "cypress run --config-file cypress/support/env/config-dev.js",
-    "test:prod": "cypress run --config-file cypress/support/env/config-prod.js",
-    "test:stg": "cypress run --config-file cypress/support/env/config-stg.js",
-    "open": "cypress open",
-    "test": "cypress run",
+    "allure:report": "allure generate allure-results --clean -o allure-report",
+    "allure:history": "if exist allure-report/history move allure-report/history allure-results/history",
+    "allure:clear": "rmdir /s /q allure-results && rmdir /s /q allure-report",
+    "test:stg": "cross-env HOST=staging allure generate allure-results --clean && npx cypress run",
+    "test:lcl": "cross-env HOST=DEV allure generate allure-results --clean && npx cypress run",
+    "open:stg": "cross-env HOST=staging npx cypress open",
+    "open:lcl": "cross-env HOST=DEV npx cypress open",
+    "test": "allure generate allure-results --clean && npx cypress run",
+    "open": "npx cypress open",
     "lint": "eslint cypress"
   },
   "keywords": [],
@@ -19,6 +20,9 @@
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
+    "allure-commandline": "^2.27.0",
+    "allure-cypress": "^2.15.0",
+    "cross-env": "^7.0.3",
     "cypress": "^13.6.6",
     "eslint-plugin-cypress": "^2.15.1"
   },
