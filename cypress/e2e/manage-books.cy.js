@@ -20,7 +20,7 @@ describe('Manage books', () => {
     });
 
     before(() => {
-        cy.loginUser(authUser).then(({ body }) => {
+        cy.loginUser(authUser()).then(({ body }) => {
             token = body.token;
         });
     });

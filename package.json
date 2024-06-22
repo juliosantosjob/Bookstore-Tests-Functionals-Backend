@@ -8,9 +8,9 @@
     "allure:history": "if exist allure-report/history move allure-report/history allure-results/history",
     "allure:clear": "rmdir /s /q allure-results && rmdir /s /q allure-report",
     "test:stg": "cross-env HOST=staging allure generate allure-results --clean && npx cypress run",
-    "test:lcl": "cross-env HOST=DEV allure generate allure-results --clean && npx cypress run",
+    "test:lcl": "cross-env HOST=dev allure generate allure-results --clean && npx cypress run",
     "open:stg": "cross-env HOST=staging npx cypress open",
-    "open:lcl": "cross-env HOST=DEV npx cypress open",
+    "open:lcl": "cross-env HOST=dev npx cypress open",
     "test": "allure generate allure-results --clean && npx cypress run",
     "open": "npx cypress open",
     "lint": "eslint cypress"

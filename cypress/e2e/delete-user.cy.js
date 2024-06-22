@@ -3,12 +3,13 @@
 import { dynamicUser } from '../payloads/users.payloads';
 
 describe('Finalize account', () => {
+    let user = dynamicUser();
     let userId, token;
 
     beforeEach(() => {
-        cy.createUser(dynamicUser).then(({ body }) => {
+        cy.createUser(user).then(({ body }) => {
             userId = body.userID;
-            cy.loginUser(dynamicUser).then(({ body }) => {
+            cy.loginUser(user).then(({ body }) => {
                 token = body.token;
             });
         });
